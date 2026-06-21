@@ -37,12 +37,12 @@ from spyder.widgets.simplecodeeditor import SimpleCodeEditor
 
 
 PREVIEW_TEXT = (
-    '"""A string"""\n\n'
-    '# A comment\n\n'
-    'class Foo(object):\n'
-    '    def __init__(self):\n'
-    '        bar = 42\n'
-    '        print(bar)\n'
+    '"""{}"""\n\n'.format('A string')
+    + '# {}\n\n'.format('A comment')
+    + 'class Foo(object):\n'
+    + '    def __init__(self):\n'
+    + '        bar = 42\n'
+    + '        print(bar)\n'
 )
 
 
@@ -75,7 +75,7 @@ class AppearanceConfigPage(PluginConfigPage):
             (_('Dark'), 'dark')
         ]
         ui_theme_combo = self.create_combobox(
-            _('Interface theme'),
+            _('Interface theme:'),
             ui_theme_choices,
             'ui_theme',
             restart=True
@@ -95,8 +95,8 @@ class AppearanceConfigPage(PluginConfigPage):
         syntax_group = QGroupBox(_("Syntax highlighting theme"))
 
         # Syntax Widgets
-        edit_button = QPushButton(_("Edit selected theme"))
-        create_button = QPushButton(_("Create new theme"))
+        edit_button = QPushButton(_("Edit theme"))
+        create_button = QPushButton(_("New theme"))
         self.delete_button = QPushButton(_("Delete theme"))
         self.reset_button = QPushButton(_("Reset to defaults"))
 
@@ -118,8 +118,14 @@ class AppearanceConfigPage(PluginConfigPage):
             # Default spacing is too big on Mac
             syntax_layout.setVerticalSpacing(2 * AppStyle. MarginSize)
 
-        btns = [self.schemes_combobox, edit_button, self.reset_button,
-                create_button, self.delete_button]
+        btns = [
+            self.schemes_combobox,
+            edit_button,
+            self.delete_button,
+            create_button,
+            self.reset_button,
+        ]
+
         for i, btn in enumerate(btns):
             syntax_layout.addWidget(btn, i, 1)
         syntax_layout.setColumnStretch(0, 1)
@@ -133,13 +139,13 @@ class AppearanceConfigPage(PluginConfigPage):
         # Fonts widgets
         self.plain_text_font = self.create_fontgroup(
             option='font',
-            title=_("Monospace"),
+            title=_("Monospace:"),
             fontfilters=QFontComboBox.MonospacedFonts,
             without_group=True)
 
         self.app_font = self.create_fontgroup(
             option='app_font',
-            title=_("Interface"),
+            title=_("Interface:"),
             fontfilters=QFontComboBox.ProportionalFonts,
             restart=True,
             without_group=True)
