@@ -52,7 +52,12 @@ class ApplicationConfigPage(PluginConfigPage):
                                               'interface_language',
                                               restart=True)
 
-        opengl_options = ['Automatic', 'Desktop', 'Software', 'GLES']
+        opengl_options = [
+            _("Automatic"),
+            _("Desktop"),
+            _("Software"),
+            _("GLES"),
+        ]
         opengl_choices = list(zip(opengl_options,
                                   [c.lower() for c in opengl_options]))
         opengl_combo = self.create_combobox(_('Rendering engine:'),
@@ -60,15 +65,23 @@ class ApplicationConfigPage(PluginConfigPage):
                                             'opengl',
                                             restart=True)
 
-        single_instance_box = newcb(_("Use a single instance"),
-                                    'single_instance',
-                                    tip=_("Set this to open external "
-                                          "Python files in an already running "
-                                          "instance (Requires a restart)"))
+        single_instance_box = newcb(
+            _("Use a single instance"),
+            "single_instance",
+            tip=_(
+                "Opens external Python files in an already running instance"
+            ),
+        )
 
-        prompt_box = newcb(_("Prompt when exiting"), 'prompt_on_exit')
-        popup_console_box = newcb(_("Show internal Spyder errors to report "
-                                    "them to Github"), 'show_internal_errors')
+        prompt_box = newcb(_("Confirm before exiting"), 'prompt_on_exit')
+        popup_console_box = newcb(
+            _("Show internal Spyder errors"),
+            "show_internal_errors",
+            tip=_(
+                "Displays Spyder's internal errors "
+                "so you can report them on GitHub"
+            ),
+        )
         check_update_cb = newcb(
             _("Check for updates on startup"),
             'check_updates_on_startup',
@@ -79,8 +92,8 @@ class ApplicationConfigPage(PluginConfigPage):
             'check_stable_only',
             section='update_manager'
         )
-        disable_zoom_mouse_cb = newcb(
-            _("Disable zoom with Ctrl/Cmd + mouse wheel"), "disable_zoom_mouse"
+        enable_zoom_mouse_cb = newcb(
+            _("Enable zoom with Ctrl/Cmd + mouse wheel"), "enable_zoom_mouse"
         )
 
         # Decide if it's possible to activate or not single instance mode
@@ -105,7 +118,7 @@ class ApplicationConfigPage(PluginConfigPage):
         advanced_layout.addWidget(popup_console_box)
         advanced_layout.addWidget(check_update_cb)
         advanced_layout.addWidget(stable_only_cb)
-        advanced_layout.addWidget(disable_zoom_mouse_cb)
+        advanced_layout.addWidget(enable_zoom_mouse_cb)
 
         advanced_widget = QWidget()
         advanced_widget.setLayout(advanced_layout)
@@ -114,15 +127,15 @@ class ApplicationConfigPage(PluginConfigPage):
         interface_group = QGroupBox(_("Panes"))
 
         empty_messages_box = newcb(
-            _("Show friendly message when some panes are empty"),
+            _("Show a friendly message in empty panes"),
             'show_message_when_panes_are_empty',
             restart=True
         )
-        verttabs_box = newcb(_("Vertical tabs in panes"),
+        verttabs_box = newcb(_("Use vertical tabs in panes"),
                              'vertical_tabs', restart=True)
-        margin_box = newcb(_("Custom margin for panes:"),
+        margin_box = newcb(_("Custom pane margin:"),
                            'use_custom_margin')
-        margin_spin = self.create_spinbox("", _("pixels"), 'custom_margin',
+        margin_spin = self.create_spinbox("", _("px"), 'custom_margin',
                                           default=0, min_=0, max_=30)
         margin_box.checkbox.toggled.connect(margin_spin.spinbox.setEnabled)
         margin_box.checkbox.toggled.connect(margin_spin.slabel.setEnabled)
@@ -175,7 +188,7 @@ class ApplicationConfigPage(PluginConfigPage):
             mac_open_file_box = newcb(
                 _("Open files from Finder with Spyder"),
                 'mac_open_file',
-                tip=_("Register Spyder with the Launch Services"))
+                tip=_("Registers Spyder with Launch Services"))
             mac_open_file_box.checkbox.toggled.connect(set_open_file)
             macOS_layout = QVBoxLayout()
             macOS_layout.addWidget(mac_open_file_box)
@@ -189,45 +202,42 @@ class ApplicationConfigPage(PluginConfigPage):
             macOS_group.setLayout(macOS_layout)
 
         # --- Screen resolution Group (hidpi)
-        screen_resolution_group = QGroupBox(_("Screen resolution"))
+        screen_resolution_group = QGroupBox(_("Display scaling"))
         screen_resolution_bg = QButtonGroup(screen_resolution_group)
-        screen_resolution_label = QLabel(_("Configuration for high DPI "
-                                           "screens<br><br>"
-                                           "Please see "
-                                           "<a href=\"{0}\">{0}</a><> "
-                                           "for more information about "
-                                           "these options (in "
-                                           "English).").format(HDPI_QT_PAGE))
+        screen_resolution_label = QLabel(_(
+            "See <a href=\"{0}\">{0}</a> for more information about "
+            "these options").format(HDPI_QT_PAGE))
         screen_resolution_label.setWordWrap(True)
         screen_resolution_label.setOpenExternalLinks(True)
 
         self.normal_radio = self.create_radiobutton(
-            _("Normal"),
+            _("Standard"),
             'normal_screen_resolution',
             button_group=screen_resolution_bg
         )
         auto_scale_radio = self.create_radiobutton(
-            _("Enable auto high DPI scaling"),
+            _("Automatic high-DPI scaling"),
             'high_dpi_scaling',
             button_group=screen_resolution_bg,
-            tip=_("Set this for high DPI displays"),
+            tip=_("Recommended for high-DPI displays"),
             restart=True
         )
 
         self.custom_scaling_radio = self.create_radiobutton(
-            _("Set a custom high DPI scaling"),
+            _("Custom high-DPI scaling:"),
             'high_dpi_custom_scale_factor',
             button_group=screen_resolution_bg,
-            tip=_("Set this for high DPI displays when auto scaling does not "
-                  "work"),
             restart=True
         )
 
         self.custom_scaling_edit = self.create_lineedit(
             "",
-            'high_dpi_custom_scale_factors',
-            tip=_("Enter values for different screens separated by semicolons "
-                  "';'. Float values are supported"),
+            "high_dpi_custom_scale_factors",
+            tip=_(
+                "Applies a manual scaling factor.<br>"
+                "Enter one value per display, separated by semicolons "
+                "(decimal values)."
+            ),
             alignment=Qt.Horizontal,
             regex=r"[1-9]+(?:\.[0-9]*)(;[1-9]+(?:\.[0-9]*))*",
             restart=True
@@ -253,12 +263,10 @@ class ApplicationConfigPage(PluginConfigPage):
         screen_resolution_inner_layout.addWidget(
             self.custom_scaling_radio.radiobutton, 2, 0)
         screen_resolution_inner_layout.addWidget(
-            self.custom_scaling_radio.radiobutton.help_label, 2, 1)
+            self.custom_scaling_edit.textbox, 2, 1)
         screen_resolution_inner_layout.addWidget(
-            self.custom_scaling_edit.textbox, 2, 2)
-        screen_resolution_inner_layout.addWidget(
-            self.custom_scaling_edit.help_label, 2, 3)
-        screen_resolution_inner_layout.setColumnStretch(2, 1)
+            self.custom_scaling_edit.help_label, 2, 2)
+        screen_resolution_inner_layout.setColumnStretch(3, 1)
 
         screen_resolution_layout.addLayout(screen_resolution_inner_layout)
         screen_resolution_group.setLayout(screen_resolution_layout)

@@ -1181,7 +1181,7 @@ class TextEditBaseWidget(
         # This feature is disabled on MacOS, see spyder-ide/spyder#1510.
         if (
             sys.platform != 'darwin'
-            and not self.get_conf('disable_zoom_mouse', section='main')
+            and self.get_conf('enable_zoom_mouse', section='main')
         ):
             if event.modifiers() & Qt.ControlModifier:
                 if hasattr(event, 'angleDelta'):

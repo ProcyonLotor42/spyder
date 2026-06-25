@@ -418,7 +418,7 @@ class WebView(QWebEngineView, SpyderWidgetMixin):
         if (
             event.type() == QEvent.Wheel
             and event.modifiers() & Qt.ControlModifier
-            and self.get_conf("disable_zoom_mouse", section="main")
+            and not self.get_conf("enable_zoom_mouse", section="main")
         ):
             return True
 

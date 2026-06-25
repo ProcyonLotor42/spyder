@@ -152,7 +152,7 @@ class FigureBrowser(
     zoom_value: int
         The new value for the zoom property.
     """
-    
+
     sig_show_info_message_requested = Signal(str, str)
     """
     This signal is emitted to request showing the main widget info message.
@@ -521,7 +521,7 @@ class FigureViewer(QScrollArea, SpyderWidgetMixin):
             modifiers = QApplication.keyboardModifiers()
             if (
                 modifiers == Qt.ControlModifier
-                and not self.get_conf('disable_zoom_mouse', section='main')
+                and self.get_conf('enable_zoom_mouse', section='main')
             ):
                 if event.angleDelta().y() > 0:
                     self.zoom_in()

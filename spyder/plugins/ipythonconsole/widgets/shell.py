@@ -1564,12 +1564,12 @@ overrided by the Sympy module (e.g. plot)
         """Reimplement Qt method to send focus change notification"""
         self.sig_focus_changed.emit()
         return super().focusOutEvent(event)
-    
+
     def eventFilter(self, obj, event):
         if (
             event.type() == QEvent.Wheel
             and self._control_key_down(event.modifiers())
-            and self.get_conf('disable_zoom_mouse', section='main')
+            and not self.get_conf('enable_zoom_mouse', section='main')
         ):
             return False
 

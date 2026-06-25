@@ -68,7 +68,7 @@ DEFAULTS = [
               'normal_screen_resolution': True,
               'high_dpi_scaling': False,
               'high_dpi_custom_scale_factor': False,
-              'high_dpi_custom_scale_factors': '1.5',
+              'high_dpi_custom_scale_factors': '1.5;2.0',
               'vertical_tabs': False,
               'prompt_on_exit': False,
               'panes_locked': True,
@@ -86,7 +86,7 @@ DEFAULTS = [
               'show_dpi_message': True,
               'show_message_when_panes_are_empty': True,
               'max_recent_files': 20,
-              'disable_zoom_mouse': False,
+              'enable_zoom_mouse': True,
               }),
             ('update_manager',
              {
