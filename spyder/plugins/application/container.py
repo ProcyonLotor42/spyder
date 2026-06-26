@@ -302,7 +302,7 @@ class ApplicationContainer(PluginMainContainer):
             triggered=lambda: start_file(__trouble_url__))
         self.report_action = self.create_action(
             ConsoleActions.SpyderReportAction,
-            _("Report issue..."),
+            _("Report issue…"),
             icon=self.create_icon('bug'),
             triggered=self.sig_report_issue_requested)
         self.dependencies_action = self.create_action(
@@ -322,7 +322,7 @@ class ApplicationContainer(PluginMainContainer):
         )
         self.create_action(
             ApplicationActions.HelpSpyderAction,
-            _("Help Spyder..."),
+            _("Help Spyder…"),
             icon=self.create_icon("inapp_appeal"),
             triggered=self.show_appeal,
         )
@@ -337,10 +337,10 @@ class ApplicationContainer(PluginMainContainer):
 
         # Tools actions
         if os.name == 'nt':
-            tip = _("Show and edit current user environment variables in "
-                    "Windows registry (i.e. for all sessions)")
+            tip = _("Show and edit environment variables in "
+                    "Windows registry for the current user (all sessions)")
         else:
-            tip = _("Show current user environment variables (i.e. for all "
+            tip = _("Show environment variables for the current user (all "
                     "sessions)")
         self.user_env_action = self.create_action(
             ApplicationActions.SpyderUserEnvVariables,
@@ -354,7 +354,7 @@ class ApplicationContainer(PluginMainContainer):
             ApplicationActions.SpyderRestart,
             _("&Restart"),
             icon=self.create_icon('restart'),
-            tip=_("Restart"),
+            tip=_("Restart Spyder"),
             triggered=self.restart_normal,
             context=Qt.ApplicationShortcut,
             shortcut_context="_",
@@ -363,7 +363,7 @@ class ApplicationContainer(PluginMainContainer):
         self.restart_debug_action = self.create_action(
             ApplicationActions.SpyderRestartDebug,
             _("&Restart in debug mode"),
-            tip=_("Restart in debug mode"),
+            tip=_("Restart Spyder in debug mode"),
             triggered=self.restart_debug,
             context=Qt.ApplicationShortcut,
             shortcut_context="_",
@@ -372,18 +372,18 @@ class ApplicationContainer(PluginMainContainer):
         # File actions
         self.new_action = self.create_action(
             ApplicationActions.NewFile,
-            text=_("&New file..."),
+            text=_("&New file…"),
             icon=self.create_icon('filenew'),
-            tip=_("New file"),
+            tip=_("Create a new file"),
             triggered=self.sig_new_file_requested.emit,
             shortcut_context="main",
             register_shortcut=True
         )
         self.open_action = self.create_action(
             ApplicationActions.OpenFile,
-            text=_("&Open..."),
+            text=_("&Open…"),
             icon=self.create_icon('fileopen'),
-            tip=_("Open file"),
+            tip=_("Open a file…"),
             triggered=self.sig_open_file_using_dialog_requested.emit,
             shortcut_context="main",
             register_shortcut=True
@@ -391,7 +391,7 @@ class ApplicationContainer(PluginMainContainer):
         self.open_last_closed_action = self.create_action(
             ApplicationActions.OpenLastClosed,
             text=_("O&pen last closed"),
-            tip=_("Open last closed"),
+            tip=_("Open the last closed file"),
             triggered=self.sig_open_last_closed_requested.emit,
             shortcut_context="main",
             register_shortcut=True
@@ -405,20 +405,20 @@ class ApplicationContainer(PluginMainContainer):
         )
         self.max_recent_action = self.create_action(
             ApplicationActions.MaxRecentFiles,
-            text=_("Maximum number of recent files..."),
+            text=_("Maximum number of recent files…"),
             triggered=self.change_max_recent_files
         )
         self.clear_recent_action = self.create_action(
             ApplicationActions.ClearRecentFiles,
             text=_("Clear this list"),
-            tip=_("Clear recent files list"),
+            tip=_("Clear the recent files list"),
             triggered=self.clear_recent_files
         )
         self.save_action = self.create_action(
             ApplicationActions.SaveFile,
             text=_("&Save"),
             icon=self.create_icon('filesave'),
-            tip=_("Save file"),
+            tip=_("Save the current file"),
             triggered=self.sig_save_file_requested.emit,
             shortcut_context="main",
             register_shortcut=True
@@ -434,39 +434,39 @@ class ApplicationContainer(PluginMainContainer):
         )
         self.save_as_action = self.create_action(
             ApplicationActions.SaveAs,
-            text=_("Save &as"),
+            text=_("Save &as…"),
             icon=self.create_icon('filesaveas'),
-            tip=_("Save current file as..."),
+            tip=_("Save the current file as…"),
             triggered=self.sig_save_file_as_requested.emit,
             shortcut_context="main",
             register_shortcut=True
         )
         self.save_copy_as_action = self.create_action(
             ApplicationActions.SaveCopyAs,
-            text=_("Save copy as..."),
+            text=_("Save copy as…"),
             icon=self.create_icon('filesaveas'),
-            tip=_("Save copy of current file as..."),
+            tip=_("Save a copy of the current file as…"),
             triggered=self.sig_save_copy_as_requested.emit
         )
         self.revert_action = self.create_action(
             ApplicationActions.RevertFile,
             text=_("&Revert"),
             icon=self.create_icon('revert'),
-            tip=_("Revert file from disk"),
+            tip=_("Revert the current file from disk"),
             triggered=self.sig_revert_file_requested.emit
         )
         self.close_file_action = self.create_action(
             ApplicationActions.CloseFile,
             text=_("&Close"),
             icon=self.create_icon('fileclose'),
-            tip=_("Close current file"),
+            tip=_("Close the current file"),
             triggered=self.sig_close_file_requested.emit
         )
         self.close_all_action = self.create_action(
             ApplicationActions.CloseAll,
             text=_("C&lose all"),
             icon=ima.icon('filecloseall'),
-            tip=_("Close all opened files"),
+            tip=_("Close all open files"),
             triggered=self.sig_close_all_requested.emit,
             shortcut_context="main",
             register_shortcut=True
@@ -515,7 +515,7 @@ class ApplicationContainer(PluginMainContainer):
         )
         self.select_all_action = self.create_action(
             ApplicationActions.SelectAll,
-            text=_('Select All'),
+            text=_('Select all'),
             icon=self.create_icon('selectall'),
             triggered=self.sig_select_all_requested.emit,
             shortcut_context="main",
@@ -525,9 +525,9 @@ class ApplicationContainer(PluginMainContainer):
         # Search actions
         self.find_action = self.create_action(
             ApplicationActions.FindText,
-            text=_("&Find text"),
+            text=_("&Find…"),
             icon=self.create_icon('find'),
-            tip=_("Find text"),
+            tip=_("Search for text in the current file…"),
             triggered=self.sig_find_requested,
             shortcut_context="find_replace",
         )
@@ -535,6 +535,7 @@ class ApplicationContainer(PluginMainContainer):
             ApplicationActions.FindNext,
             text=_("Find &next"),
             icon=self.create_icon('findnext'),
+            tip=_("Go to the next match"),
             triggered=self.sig_find_next_requested,
             shortcut_context="find_replace",
         )
@@ -542,14 +543,15 @@ class ApplicationContainer(PluginMainContainer):
             ApplicationActions.FindPrevious,
             text=_("Find &previous"),
             icon=ima.icon('findprevious'),
+            tip=_("Go to the previous match"),
             triggered=self.sig_find_previous_requested,
             shortcut_context="find_replace",
         )
         self.replace_action = self.create_action(
             ApplicationActions.ReplaceText,
-            text=_("&Replace text"),
+            text=_("&Replace…"),
             icon=ima.icon('replace'),
-            tip=_("Replace text"),
+            tip=_("Find and replace text in the current file…"),
             triggered=self.sig_replace_requested,
             shortcut_context="find_replace",
         )
@@ -787,14 +789,12 @@ class ApplicationContainer(PluginMainContainer):
             self.recent_files.pop(-1)
 
     def clear_recent_files(self) -> None:
-        """
-        Clear list of recent files.
-        """
+        """Clear list of recent files."""
         self.recent_files = []
 
     def update_recent_files_menu(self):
         """
-        Update recent files menu
+        Update recent files menu.
 
         Add menu items for all the recent files to the menu. Also add items
         for setting the maximum number and for clearing the list.
@@ -834,13 +834,11 @@ class ApplicationContainer(PluginMainContainer):
         self.recent_files_menu.render()
 
     def change_max_recent_files(self) -> None:
-        """
-        Change the maximum length of the list of recent files.
-        """
+        """Change the maximum length of the list of recent files."""
         mrf, valid = QInputDialog.getInt(
             self,
             _('Editor'),
-            _('Maximum number of recent files'),
+            _('Maximum number of recent files:'),
             self.get_conf('max_recent_files'),
             1,
             35
@@ -950,20 +948,22 @@ class ApplicationContainer(PluginMainContainer):
             self.dpi_messagebox = MessageCheckBox(icon=QMessageBox.Warning,
                                                   parent=self)
 
-            self.dpi_messagebox.set_checkbox_text(_("Don't show again."))
+            self.dpi_messagebox.set_checkbox_text(_("Don't show again"))
             self.dpi_messagebox.set_checked(False)
             self.dpi_messagebox.set_check_visible(True)
 
             self.dpi_messagebox.setText(
-                _
-                ("A monitor scale change was detected. <br><br>"
-                 "We recommend restarting Spyder to ensure that it's properly "
-                 "displayed. If you don't want to do that, please be sure to "
-                 "activate the option<br><br><tt>Enable auto high DPI scaling"
-                 "</tt><br><br>in <tt>Preferences > Application > "
-                 "Interface</tt>, in case Spyder is not displayed "
-                 "correctly.<br><br>"
-                 "Do you want to restart Spyder?"))
+                _(
+                    "A monitor scale change was detected.<br><br>"
+                    "We recommend restarting Spyder to ensure that it's "
+                    "properly displayed. If you don't want to do that, please "
+                    "be sure to activate the option<br><br><tt>Automatic "
+                    "high-DPI scaling</tt><br><br>in <tt>Preferences > "
+                    "Application > Interface</tt>, in case Spyder is not "
+                    "displayed correctly.<br><br>"
+                    "Do you want to restart Spyder?"
+                )
+            )
 
             self.dpi_messagebox.addButton(_('Restart now'), QMessageBox.NoRole)
             dismiss_button = self.dpi_messagebox.addButton(
