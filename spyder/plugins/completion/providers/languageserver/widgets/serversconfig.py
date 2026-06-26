@@ -133,16 +133,16 @@ class LSPServerEditor(QDialog, SpyderFontsMixin):
         super().__init__(parent)
 
         description = _(
-            "To create a new server configuration, you need to select a "
-            "programming language, set the command to start its associated "
-            "server and enter any arguments that should be passed to it on "
-            "startup. Additionally, you can set the server's hostname and "
-            "port if connecting to an external server, "
-            "or to a local one using TCP instead of stdio pipes."
+            "To create a new server configuration, select a "
+            "programming language, set the command that start its "
+            "server, and enter any arguments to pass on startup. "
+            "You can also set the server's host and "
+            "port when connecting to a remote server, "
+            "or to a local one over TCP instead of stdio pipes."
             "<br><br>"
-            "<i>Note</i>: You can use the placeholders <tt>{host}</tt> and "
-            "<tt>{port}</tt> in the server arguments field to automatically "
-            "fill in the respective values.<br>"
+            "<i>Note</i>: in the server arguments field, you can use "
+            "the placeholders <tt>{host}</tt> and "
+            "<tt>{port}</tt> to fill in their values automatically.<br>"
         )
         self.parent = parent
         self.external = external
@@ -153,7 +153,7 @@ class LSPServerEditor(QDialog, SpyderFontsMixin):
         # Widgets
         self.server_settings_description = QLabel(description)
         self.lang_cb = SpyderComboBox(self)
-        self.external_cb = QCheckBox(_('External server'), self)
+        self.external_cb = QCheckBox(_('Remote server'), self)
         self.host_label = QLabel(_('Host:'))
         self.host_input = QLineEdit(self)
         self.port_label = QLabel(_('Port:'))
@@ -163,7 +163,7 @@ class LSPServerEditor(QDialog, SpyderFontsMixin):
         self.args_label = QLabel(_('Arguments:'))
         self.args_input = QLineEdit(self)
         self.json_label = QLabel(self.JSON_VALID, self)
-        self.conf_label = QLabel(_('<b>Server Configuration:</b>'))
+        self.conf_label = QLabel(_('<b>Server configuration:</b>'))
         self.conf_input = SimpleCodeEditor(None)
 
         self.bbox = SpyderDialogButtonBox(
@@ -216,7 +216,7 @@ class LSPServerEditor(QDialog, SpyderFontsMixin):
         )
         self.conf_input.set_language('json')
         self.conf_input.setToolTip(_('Additional LSP server configuration '
-                                     'set at runtime. JSON required'))
+                                     'set at runtime. JSON required.'))
         try:
             conf_text = json.dumps(configurations, indent=4, sort_keys=True)
         except Exception:
@@ -338,7 +338,7 @@ class LSPServerEditor(QDialog, SpyderFontsMixin):
                 self.cmd_input.setStyleSheet(self.INVALID_CSS)
                 self.cmd_input.setToolTip(
                     _('Command used to start the LSP server locally. Must be '
-                      'non empty'))
+                      'non empty.'))
                 return
 
             if find_program(cmd_text) is None:

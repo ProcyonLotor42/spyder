@@ -57,7 +57,7 @@ class CompletionConfigPage(PluginConfigPage):
             ),
         )
         completions_after_characters = self.create_spinbox(
-            _("Show automatic completions after characters entered:"), None,
+            _("Minimum characters before showing completions:"), None,
             'automatic_completions_after_chars', min_=1, step=1,
             tip=_("Default is 1"), section='editor')
         code_snippets_box = newcb(

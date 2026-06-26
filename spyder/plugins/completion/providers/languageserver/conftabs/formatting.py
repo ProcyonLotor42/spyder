@@ -35,7 +35,7 @@ class FormattingConfigTab(SpyderPreferencesTab):
             tip=_("Default is 79"))
 
         vertical_line_box = newcb(
-            _("Show vertical line at that length"), 'edge_line',
+            _("Show vertical line"), 'edge_line',
             section='editor')
 
         # Maximum allowed line length layout
@@ -58,8 +58,8 @@ class FormattingConfigTab(SpyderPreferencesTab):
         formatter_urls = black_url + ", " + ruff_url + ", " + autopep8_url
         code_fmt_label = QLabel(
             _(
-                "Spyder can use one of the following formatters to format "
-                "your code for conformance to the {0} convention: {1}."
+                "Spyder can format your code to follow the {0} convention. "
+                "Learn more about each formatter: {1}."
             ).format(pep_url, formatter_urls)
         )
         code_fmt_label.setOpenExternalLinks(True)
@@ -67,17 +67,16 @@ class FormattingConfigTab(SpyderPreferencesTab):
 
         # Code formatting providers
         code_fmt_provider = self.create_combobox(
-            _("Choose the code formatting provider: "),
+            _("Code formatting provider:"),
             (("autopep8", "autopep8"), ("black", "black"), ("ruff", "ruff")),
             "formatting",
         )
 
         # Autoformat on save
         format_on_save_box = newcb(
-            _("Autoformat files on save"),
+            _("Format on save"),
             'format_on_save',
-            tip=_("If enabled, autoformatting will take place when "
-                  "saving a file"))
+            tip=_("Format the file automatically on save"))
 
         # Code formatting layout
         code_fmt_group = QGroupBox(_("Code formatting"))

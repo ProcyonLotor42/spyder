@@ -36,9 +36,9 @@ class OtherLanguagesConfigTab(SpyderPreferencesTab):
         servers_label = QLabel(
             _("Spyder uses the <a href=\"{lsp_url}\">Language Server "
               "Protocol</a> to provide code completion and linting "
-              "for its Editor. Here, you can setup and configure LSP servers "
-              "for languages other than Python, so Spyder can provide such "
-              "features for those languages as well."
+              "in the editor. You can configure LSP servers "
+              "for languages other than Python to enable the same "
+              "features for them."
               ).format(lsp_url=LSP_URL))
         servers_label.setOpenExternalLinks(True)
         servers_label.setWordWrap(True)
@@ -58,7 +58,7 @@ class OtherLanguagesConfigTab(SpyderPreferencesTab):
         self.new_btn = QPushButton(icon=ima.icon("edit_add"))
         self.new_btn.setToolTip(_("Set up a new server"))
         self.delete_btn = QPushButton(icon=ima.icon("editclear"))
-        self.delete_btn.setToolTip(_("Delete currently selected server"))
+        self.delete_btn.setToolTip(_("Delete selected server"))
         self.reset_btn = QPushButton(icon=ima.icon("restart"))
         self.reset_btn.setToolTip(_("Reset to default values"))
         self.delete_btn.setEnabled(False)

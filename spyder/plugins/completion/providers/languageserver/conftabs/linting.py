@@ -40,9 +40,8 @@ class LintingConfigTab(SpyderPreferencesTab):
 
         linting_label = QLabel(
             _(
-                "Spyder can highlight syntax errors and possible problems "
-                "with your code in the editor by using one of the providers "
-                "below"
+                "Spyder can highlight syntax errors and "
+                "other code issues as you type"
             )
         )
         linting_label.setOpenExternalLinks(True)
@@ -101,7 +100,7 @@ class LintingConfigTab(SpyderPreferencesTab):
             _("Enable docstring style linting"), "pydocstyle"
         )
         docstring_style_convention = self.create_combobox(
-            _("Convention used to lint docstrings: "),
+            _("Docstring convention:"),
             (
                 ("Numpy", "numpy"),
                 ("PEP 257", "pep257"),

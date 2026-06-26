@@ -33,8 +33,8 @@ class AdvancedConfigTab(SpyderPreferencesTab):
         lsp_advanced_group = QGroupBox(_(
             'Python Language Server configuration'))
         advanced_label = QLabel(
-            _("<b>Warning</b>: Only modify these values if "
-              "you know what you're doing!"))
+            _("<b>Warning</b>: only modify these values if "
+              "you know what you're doing"))
         advanced_label.setWordWrap(True)
         advanced_label.setAlignment(Qt.AlignJustify)
 
@@ -48,13 +48,13 @@ class AdvancedConfigTab(SpyderPreferencesTab):
             'advanced/module', alignment=Qt.Horizontal,
             word_wrap=False)
         self.advanced_host = self.create_lineedit(
-            _("IP Address and port to bind the server to: "),
+            _("Server host and port:"),
             'advanced/host', alignment=Qt.Horizontal,
             word_wrap=False)
         self.advanced_port = self.create_spinbox(
             ":", "", 'advanced/port', min_=1, max_=65535, step=1)
         self.external_server = self.create_checkbox(
-            _("This is an external server"),
+            _("Remote server"),
             'advanced/external')
         self.use_stdio = self.create_checkbox(
             _("Use stdio pipes to communicate with server"),
@@ -152,12 +152,12 @@ class AdvancedConfigTab(SpyderPreferencesTab):
             QMessageBox.warning(
                 self,
                 _("Warning"),
-                _("<b>Modifying these options can break code completion!!</b>"
+                _("<b>Modifying these options can break code completion.</b>"
                   "<br><br>"
-                  "If that's the case, please reset your Spyder preferences "
+                  "If this happens, reset your Spyder preferences "
                   "by going to the menu"
                   "<br><br>"
-                  "<tt>Tools > Reset all preferences to default</tt>"
+                  "<tt>Tools > Reset all preferences to defaults</tt>"
                   "<br><br>"
                   "instead of reporting a bug."))
 
@@ -204,12 +204,12 @@ class AdvancedConfigTab(SpyderPreferencesTab):
         QMessageBox.critical(
             self,
             _("Error"),
-            _("It appears there is no {language} language server listening "
+            _("No {language} language server is listening "
               "at address:"
               "<br><br>"
               "<tt>{host}:{port}</tt>"
               "<br><br>"
-              "Please verify that the provided information is correct "
+              "Verify that the information is correct "
               "and try again.").format(host=host, port=port,
                                        language=language.capitalize())
         )
@@ -222,9 +222,7 @@ class AdvancedConfigTab(SpyderPreferencesTab):
         QMessageBox.critical(
             self,
             _("Error"),
-            _("The address of the external server you are trying to connect "
-              "to is the same as the one of the current internal server "
-              "started by Spyder."
+            _("The remote server address matches Spyder's local server."
               "<br><br>"
-              "Please provide a different address!")
+              "Enter a different address.")
         )

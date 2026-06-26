@@ -439,13 +439,13 @@ class LanguageServerProvider(SpyderCompletionProvider):
             return
 
         if os.name == 'nt':
-            os_message = (
+            os_message = _(
                 "To try to fix this, please verify that your firewall or "
                 "antivirus allows Python processes to open ports in your "
                 "system, or restart Spyder.<br><br>"
             )
         else:
-            os_message = (
+            os_message = _(
                 "This problem could be fixed by restarting Spyder. "
             )
 
