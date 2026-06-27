@@ -92,8 +92,8 @@ class DebuggerWidget(ShellConnectMainWidget):
     IMAGE_WHEN_EMPTY = "debugger"
     MESSAGE_WHEN_EMPTY = _("Debugging is not active")
     DESCRIPTION_WHEN_EMPTY = _(
-        "Start a debugging session with the ⏯ button, allowing you to step "
-        "through your code and see the functions here that Python has run."
+        "Start a debugging session with the ⏯ button. You can then step "
+        "through your code and inspect the call stack."
     )
     SET_LAYOUT_WHEN_EMPTY = False
 
@@ -316,10 +316,7 @@ class DebuggerWidget(ShellConnectMainWidget):
 
         goto_cursor_action = self.create_action(
             DebuggerWidgetActions.GotoCursor,
-            text=_(
-                "Show the file and line where the debugger is placed in the "
-                "editor"
-            ),
+            text=_("Go to the current execution line in the editor"),
             icon=self.create_icon("go_to_editor"),
             triggered=self.goto_current_step,
             register_shortcut=True,
@@ -378,9 +375,9 @@ class DebuggerWidget(ShellConnectMainWidget):
         main_toolbar = self.get_main_toolbar()
         for item in [
             next_action,
-            continue_action,
             step_action,
             return_action,
+            continue_action,
             stop_action,
         ]:
             self.add_item_to_toolbar(
