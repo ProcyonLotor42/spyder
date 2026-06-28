@@ -46,8 +46,8 @@ class MouseShortcutEditor(QDialog, SpyderConfigurationAccessor):
         layout = QVBoxLayout()
 
         description = QLabel(
-            "Here you can configure shortcuts that are triggered by one or "
-            "more key modifiers and a left mouse click"
+            "Configure shortcuts triggered by one or "
+            "more modifier keys and a left-click"
         )
         description.setWordWrap(True)
         layout.addWidget(description)
@@ -62,7 +62,7 @@ class MouseShortcutEditor(QDialog, SpyderConfigurationAccessor):
 
         self.goto_def_shortcut = ShortcutSelector(
             self,
-            _("Go to a code definition"),
+            _("Go to a definition"),
             mouse_shortcuts['goto_definition']
         )
         self.goto_def_shortcut.sig_changed.connect(self.validate)
@@ -70,7 +70,7 @@ class MouseShortcutEditor(QDialog, SpyderConfigurationAccessor):
 
         self.add_cursor_shortcut = ShortcutSelector(
             self,
-            _("Add/remove an additional cursor"),
+            _("Add/remove a cursor"),
             mouse_shortcuts['add_remove_cursor']
         )
         self.add_cursor_shortcut.sig_changed.connect(self.validate)
@@ -83,7 +83,7 @@ class MouseShortcutEditor(QDialog, SpyderConfigurationAccessor):
         )
         self.column_cursor_shortcut.sig_changed.connect(self.validate)
         layout.addWidget(self.column_cursor_shortcut)
-        
+
         buttons = (
             QDialogButtonBox.StandardButton.Apply |
             QDialogButtonBox.StandardButton.Ok |
@@ -102,7 +102,7 @@ class MouseShortcutEditor(QDialog, SpyderConfigurationAccessor):
         cancel_b = button_box.button(QDialogButtonBox.StandardButton.Cancel)
         cancel_b.clicked.connect(self.reject)
         layout.addWidget(button_box)
-        
+
         self.setLayout(layout)
 
     def apply_mouse_shortcuts(self):
@@ -208,7 +208,7 @@ class ShortcutSelector(QWidget):
 
         warning_icon = ima.icon("MessageBoxWarning")
         self.warning = TipWidget(
-            _("Shortcut Conflicts With Another"),
+            _("Shortcut conflict"),
             warning_icon,
             warning_icon
         )
