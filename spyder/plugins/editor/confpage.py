@@ -207,16 +207,16 @@ class EditorConfigPage(PluginConfigPage, SpyderConfigurationObserver):
         # -- Trailing whitespace group
         whitespace_group = QGroupBox(_("Trailing whitespace"))
         self.removetrail_box = newcb(
-            _("Strip all trailing whitespaces on save"),
+            _("Remove all trailing whitespaces on save"),
             'always_remove_trailing_spaces',
             default=False,
         )
         strip_mode_box = newcb(
-            _("Strip trailing whitespaces on edited lines"),
+            _("Remove trailing whitespaces on edited lines"),
             'strip_trailing_spaces_on_modify',
             default=True,
             tip=_(
-                "Remove trailing whitespace from edited line as you leave "
+                "Removes trailing whitespace from edited line as you leave "
                 "them, except inside strings.<br>When off, only whitespace "
                 "that Spyder itself added is stripped."
             ),
@@ -231,7 +231,7 @@ class EditorConfigPage(PluginConfigPage, SpyderConfigurationObserver):
             ),
         )
         self.remove_trail_newline_box = newcb(
-            _("Strip blank lines at end of file on save"),
+            _("Remove blank lines at end of file on save"),
             'always_remove_trailing_newlines',
             default=False,
             tip=_(
