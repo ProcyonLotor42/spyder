@@ -4,7 +4,7 @@
 # Licensed under the terms of the MIT License
 # (see spyder/__init__.py for details)
 
-"""EditorStack Widget"""
+"""EditorStack Widget."""
 
 # pylint: disable=C0103
 # pylint: disable=R0903
@@ -287,7 +287,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
         )
         self.close_all_but_this = self.create_action(
             EditorStackActions.CloseAllButThis,
-            text=_("Close all but this"),
+            text=_("Close others"),
             triggered=self.on_close_all_but_this,
             register_action=False
         )
@@ -301,7 +301,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
         if sys.platform == 'darwin':
             text = _("Show in Finder")
         else:
-            text = _("Show in external file explorer")
+            text = _("Show in system file explorer")
         self.external_fileexp_action = self.create_action(
             EditorStackActions.ShowInExternalFileExplorer,
             text=text,
@@ -315,9 +315,9 @@ class EditorStack(QWidget, SpyderWidgetMixin):
         if parent is not None:
             self.new_window_action = self.create_action(
                 EditorStackActions.NewWindow,
-                text=_("New window"),
+                text=_("Open in new window"),
                 icon=self.create_icon('newwindow'),
-                tip=_("Create a new editor window"),
+                tip=_("Open the current tabs in a new window"),
                 triggered=parent.main_widget.create_new_window,
                 register_action=False
             )
@@ -427,7 +427,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
 
     @Slot()
     def show_in_external_file_explorer(self, fnames=None):
-        """Show file in external file explorer"""
+        """Show file in external file explorer."""
         if fnames is None or isinstance(fnames, bool):
             fnames = self.get_current_filename()
         try:
@@ -435,9 +435,9 @@ class EditorStack(QWidget, SpyderWidgetMixin):
         except FileNotFoundError as error:
             if "xdg-open" in str(error):
                 msg_title = _("Error")
-                msg = _("Spyder can't show this file in the external file "
-                        "explorer because the <tt>xdg-utils</tt> package is "
-                        "not available on your system.")
+                msg = _("This file cannot be shown in the system file "
+                        "explorer because the <tt>xdg-utils</tt> package "
+                        "is not available on your system.")
                 QMessageBox.critical(
                     self, msg_title, msg, QMessageBox.Ok
                 )
@@ -455,11 +455,12 @@ class EditorStack(QWidget, SpyderWidgetMixin):
         ):
             QMessageBox.warning(
                 self,
-                _("No available relative path"),
-                _("It is not possible to copy a relative path "
-                  "for this file because it is placed in a "
-                  "different drive than your current working "
-                  "directory. Please copy its absolute path.")
+                _("No relative path available"),
+                _(
+                    "A relative path cannot be copied for this file because "
+                    "it is on a different drive than your current working "
+                    "directory. Copy its absolute path instead."
+                ),
             )
         else:
             base_path = getcwd_or_home()
@@ -586,7 +587,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
             self.symbolfinder_action = None
 
     def setup_editorstack(self, parent, layout):
-        """Setup editorstack's layout"""
+        """Setup editorstack's layout."""
         layout.setSpacing(0)
 
         # Create filename label, spinner and the toolbar that contains them
@@ -737,7 +738,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
         return finfo.editor
 
     def clone_from(self, other):
-        """Clone EditorStack from other instance"""
+        """Clone EditorStack from other instance."""
         for other_finfo in other.data:
             self.clone_editor_from(other_finfo, set_current=True)
         self.set_stack_index(other.get_stack_index())
@@ -755,7 +756,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
         return self.get_main_widget().get_title()
 
     def go_to_line(self, line=None):
-        """Go to line dialog"""
+        """Go to line dialog."""
         if line is not None:
             # When this method is called from the fileswitcher, a line
             # number is specified, so there is no need for the dialog.
@@ -773,7 +774,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
     @Slot()
     @Slot(bool)
     def inspect_current_object(self, clicked=False):
-        """Inspect current object in the Help plugin"""
+        """Inspect current object in the Help plugin."""
         editor = self.get_current_editor()
         editor.sig_display_object_info.connect(self.display_help)
         cursor = None
@@ -830,7 +831,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
         self.set_color_scheme(value)
 
     def set_closable(self, state):
-        """Parent widget must handle the closable state"""
+        """Parent widget must handle the closable state."""
         self.is_closable = state
 
     def set_find_widget(self, find_widget):
@@ -1160,7 +1161,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
 
     @on_conf_change(option='convert_eol_on_save_to')
     def set_convert_eol_on_save_to(self, state):
-        """`state` can be one of ('LF', 'CRLF', 'CR')"""
+        """`state` can be one of ('LF', 'CRLF', 'CR')."""
         self.convert_eol_on_save_to = state
 
     @on_conf_change(option='multicursor_support')
@@ -1241,7 +1242,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
                                               is_modified, is_readonly)
 
     def get_tab_tip(self, filename, is_modified=None, is_readonly=None):
-        """Return tab menu title"""
+        """Return tab menu title."""
         text = u"%s — %s"
         text = self.__modified_readonly_title(text,
                                               is_modified, is_readonly)
@@ -1350,7 +1351,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
 
     # ---- Context menu
     def __setup_menu(self):
-        """Setup tab context menu before showing it"""
+        """Setup tab context menu before showing it."""
         self.menu.clear_actions()
         if self.data:
             given_actions = self._given_actions + [
@@ -1426,7 +1427,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
             EditorStackActions.SplitVertically,
             text=_("Split vertically"),
             icon=self.create_icon('versplit'),
-            tip=_("Split vertically this editor window"),
+            tip=_("Split this editor window vertically"),
             triggered=self.sig_split_vertically,
             context=Qt.WidgetShortcut,
             register_shortcut=True,
@@ -1436,7 +1437,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
             EditorStackActions.SplitHorizontally,
             text=_("Split horizontally"),
             icon=self.create_icon('horsplit'),
-            tip=_("Split horizontally this editor window"),
+            tip=_("Split this editor window horizontally"),
             triggered=self.sig_split_horizontally,
             context=Qt.WidgetShortcut,
             register_shortcut=True,
@@ -1444,7 +1445,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
         )
         self.close_split_action = self.create_action(
             EditorStackActions.CloseSplitPanel,
-            text=_("Close this panel"),
+            text=_("Close"),
             icon=self.create_icon('close_panel'),
             triggered=self.close_split,
             context=Qt.WidgetShortcut,
@@ -1751,12 +1752,12 @@ class EditorStack(QWidget, SpyderWidgetMixin):
             pass
 
     def close_all_files(self):
-        """Close all opened scripts"""
+        """Close all opened scripts."""
         while self.close_file():
             pass
 
     def close_all_right(self):
-        """ Close all files opened to the right """
+        """Close all files opened to the right."""
         num = self.get_stack_index()
         n = self.get_stack_count()
         for __ in range(num, n - 1):
@@ -1769,7 +1770,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
             self.close_file(0)
 
     def on_close_all_but_this(self):
-        """Close all files but the current one"""
+        """Close all files but the current one."""
         self.close_all_right()
         for __ in range(0, self.get_stack_count() - 1):
             self.close_file(0)
@@ -2017,7 +2018,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
         except EnvironmentError as error:
             self.msgbox = QMessageBox(
                 QMessageBox.Critical,
-                _("Save Error"),
+                _("Save error"),
                 _("<b>Unable to save file '%s'</b>"
                   "<br><br>Error message:<br>%s"
                   ) % (osp.basename(finfo.filename), str(error)),
@@ -2208,7 +2209,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
             except EnvironmentError as error:
                 self.msgbox = QMessageBox(
                     QMessageBox.Critical,
-                    _("Save Error"),
+                    _("Save error"),
                     _("<b>Unable to save file '%s'</b>"
                       "<br><br>Error message:<br>%s"
                       ) % (osp.basename(finfo.filename), str(error)),
@@ -2247,7 +2248,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
         self.is_analysis_done = True
 
     def set_todo_results(self, filename, todo_results):
-        """Synchronize todo results between editorstacks"""
+        """Synchronize todo results between editorstacks."""
         index = self.has_filename(filename)
         if index is None:
             return
@@ -2258,7 +2259,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
             return self.data[self.get_stack_index()].todo_results
 
     def current_changed(self, index):
-        """Stack index has changed"""
+        """Stack index has changed."""
         editor = self.get_current_editor()
         if index != -1:
             editor.setFocus()
@@ -2326,7 +2327,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
         self.tabs_switcher.setFocus()
 
     def focus_changed(self):
-        """Editor focus has changed"""
+        """Editor focus has changed."""
         fwidget = QApplication.focusWidget()
         for finfo in self.data:
             if fwidget is finfo.editor:
@@ -2338,7 +2339,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
         self.editor_focus_changed.emit()
 
     def _refresh_outlineexplorer(self, index=None, update=True, clear=False):
-        """Refresh outline explorer panel"""
+        """Refresh outline explorer panel."""
         oe = self.outlineexplorer
         if oe is None:
             return
@@ -2369,7 +2370,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
                 [finfo.editor.get_document_id() for finfo in self.data])
 
     def __refresh_statusbar(self, index):
-        """Refreshing statusbar widgets"""
+        """Refreshing statusbar widgets."""
         if self.data and len(self.data) > index:
             finfo = self.data[index]
             self.encoding_changed.emit(finfo.encoding)
@@ -2430,7 +2431,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
                 self.title,
                 _("The file <b>%s</b> is unavailable."
                   "<br><br>"
-                  "It may have been removed, moved or renamed outside Spyder."
+                  "It may have been deleted, moved or renamed outside Spyder."
                   "<br><br>"
                   "Do you want to close it?") % name,
                 QMessageBox.Yes | QMessageBox.No,
@@ -2460,7 +2461,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
                             _("The file <b>{}</b> has been modified outside "
                               "Spyder."
                               "<br><br>"
-                              "Do you want to reload it and lose all your "
+                              "Do you want to reload it and discard your "
                               "changes?").format(name),
                             QMessageBox.Yes | QMessageBox.No,
                             self
@@ -2477,12 +2478,13 @@ class EditorStack(QWidget, SpyderWidgetMixin):
                     self.msgbox = QMessageBox(
                         QMessageBox.Warning,
                         self.title,
-                        _("The file <b>{}</b> has been modified outside "
-                          "Spyder but it was not possible to reload it."
-                          "<br><br>"
-                          "Therefore, it will be closed.").format(name),
+                        _(
+                            "The file <b>{}</b> has been modified outside "
+                            "Spyder, but it could not be reloaded and will "
+                            "be closed."
+                        ).format(name),
                         QMessageBox.Ok,
-                        self
+                        self,
                     )
                     self.msgbox.exec_()
                     self.close_file(index, force=True)
@@ -2496,7 +2498,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
             self.set_stack_title(index, state)
 
     def refresh(self, index=None):
-        """Refresh tabwidget"""
+        """Refresh tabwidget."""
         logger.debug("Refresh EditorStack")
 
         if index is None:
@@ -2602,7 +2604,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
             self.msgbox = QMessageBox(
                 QMessageBox.Warning,
                 self.title,
-                _("All changes to file <b>%s</b> will be lost.<br>"
+                _("All changes to file <b>%s</b> will be discarded.<br>"
                   "Do you want to revert it from disk?"
                   ) % osp.basename(filename),
                 QMessageBox.Yes | QMessageBox.No,
@@ -2622,9 +2624,11 @@ class EditorStack(QWidget, SpyderWidgetMixin):
             QMessageBox.critical(
                 self,
                 _("Error"),
-                _("File <b>%s</b> is not saved on disk, so it can't be "
-                  "reverted.") % osp.basename(filename),
-                QMessageBox.Ok
+                _(
+                    "File <b>%s</b> cannot be reverted because it has "
+                    "never been saved to disk."
+                ) % osp.basename(filename),
+                QMessageBox.Ok,
             )
 
     def create_new_editor(
@@ -2644,7 +2648,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
     ):
         """
         Create a new editor instance
-        Returns finfo object (instead of editor as in previous releases)
+        Returns finfo object (instead of editor as in previous releases).
         """
         editor = CodeEditor(
             self, extensions=extensions, panels=panels, shortcuts=shortcuts
@@ -2782,12 +2786,12 @@ class EditorStack(QWidget, SpyderWidgetMixin):
         return finfo
 
     def editor_cursor_position_changed(self, line, index):
-        """Cursor position of one of the editor in the stack has changed"""
+        """Cursor position of one of the editor in the stack has changed."""
         self.sig_editor_cursor_position_changed.emit(line, index)
 
     @Slot(str, str, bool)
     def send_to_help(self, name, signature, force=False):
-        """qstr1: obj_text, qstr2: argpspec, qstr3: note, qstr4: doc_text"""
+        """qstr1: obj_text, qstr2: argpspec, qstr3: note, qstr4: doc_text."""
         if not force and not self.help_enabled:
             return
 
@@ -2829,9 +2833,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
             list[tuple[str, Callable[[CodeEditor], None], str]] | None
         ) = None,
     ):
-        """
-        Create new filename with *encoding* and *text*
-        """
+        """Create new filename with *encoding* and *text*."""
         finfo = self.create_new_editor(
             filename,
             encoding,
@@ -2870,7 +2872,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
         filename = osp.abspath(str(filename))
 
         if processevents:
-            self.starting_long_process.emit(_("Loading %s...") % filename)
+            self.starting_long_process.emit(_("Loading %s…") % filename)
 
         # This is necessary to avoid a crash at startup when trying to restore
         # files from the previous session.
@@ -2909,10 +2911,12 @@ class EditorStack(QWidget, SpyderWidgetMixin):
             self.msgbox = QMessageBox(
                 QMessageBox.Warning,
                 self.title,
-                _("<b>%s</b> contains mixed end-of-line characters.<br>"
-                  "Spyder will fix this automatically.") % name,
+                _(
+                    "<b>%s</b> contains mixed end-of-line characters.<br>"
+                    "They will be normalized to system EOL automatically."
+                ) % name,
                 QMessageBox.Ok,
-                self
+                self,
             )
             self.msgbox.exec_()
             self.set_os_eol_chars(index)
@@ -2960,7 +2964,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
         finfo.editor.document().setModified(True)
 
     def remove_trailing_spaces(self, index=None):
-        """Remove trailing spaces"""
+        """Remove trailing spaces."""
         if index is None:
             index = self.get_stack_index()
         finfo = self.data[index]
@@ -3006,7 +3010,7 @@ class EditorStack(QWidget, SpyderWidgetMixin):
 
     # ---- Run
     def _get_lines_cursor(self, direction):
-        """ Select and return all lines from cursor in given direction"""
+        """Select and return all lines from cursor in given direction."""
         editor = self.get_current_editor()
         finfo = self.get_current_finfo()
         enc = finfo.encoding

@@ -4,9 +4,7 @@
 # Licensed under the terms of the MIT License
 # (see spyder/__init__.py for details)
 
-"""
-Mixin to manage editing with multiple cursors.
-"""
+"""Mixin to manage editing with multiple cursors."""
 
 # Standard library imports
 import functools
@@ -29,7 +27,7 @@ class MultiCursorMixin:
     """Mixin to manage editing with multiple cursors."""
 
     def init_multi_cursor(self):
-        """Initialize attrs and callbacks for multi-cursor functionality"""
+        """Initialize attrs and callbacks for multi-cursor functionality."""
         # actual default comes from setup_editor default args
         self.multi_cursor_enabled = False
         self.cursor_width = self.get_conf('cursor/width', section='main')
@@ -84,10 +82,10 @@ class MultiCursorMixin:
         if abs(anchor_block.blockNumber() - pos_block.blockNumber()) >= 1000:
             response = QMessageBox.warning(
                 self,
-                _("Large number of cursors!"),
+                _("Too many cursors"),
                 _(
-                    "A large numbers of text cursors can cause Spyder to "
-                    "become unresponsive. Do you want to continue?"
+                    "Too many text cursors can make Spyder unresponsive.<br>"
+                    "Do you want to continue?"
                 ),
                 QMessageBox.Ok | QMessageBox.Cancel
             )
@@ -129,8 +127,7 @@ class MultiCursorMixin:
         self.last_append_direction = 0
 
     def add_remove_cursor(self, event):
-        """Add or remove extra cursor on mouse click event"""
-
+        """Add or remove extra cursor on mouse click event."""
         if not self.multi_cursor_enabled:
             return
 
@@ -222,17 +219,17 @@ class MultiCursorMixin:
         self.set_extra_selections('extra_cursor_selections', selections)
 
     def clear_extra_cursors(self):
-        """Remove all extra cursors"""
+        """Remove all extra cursors."""
         self.extra_cursors = []
         self.set_extra_selections('extra_cursor_selections', [])
 
     @property
     def all_cursors(self):
-        """Return list of all extra_cursors (if any) plus the primary cursor"""
+        """Return list of all extra_cursors (if any) plus the primary cursor."""
         return self.extra_cursors + [self.textCursor()]
 
     def merge_extra_cursors(self, increasing_position):
-        """Merge overlapping cursors"""
+        """Merge overlapping cursors."""
         if not self.extra_cursors:
             return
 
@@ -291,8 +288,7 @@ class MultiCursorMixin:
 
     @Slot(QKeyEvent)
     def handle_multi_cursor_keypress(self, event: QKeyEvent):
-        """Re-Implement keyEvent handler for multi-cursor"""
-
+        """Re-Implement keyEvent handler for multi-cursor."""
         key = event.key()
         ctrl = event.modifiers() & Qt.KeyboardModifier.ControlModifier
         alt = event.modifiers() & Qt.KeyboardModifier.AltModifier
@@ -472,7 +468,7 @@ class MultiCursorMixin:
 
     @Slot(QPaintEvent)
     def paint_cursors(self, event):
-        """Paint all cursors"""
+        """Paint all cursors."""
         if self.overwrite_mode:
             font = self.font()
             cursor_width = QFontMetrics(font).horizontalAdvance(" ")
@@ -552,7 +548,7 @@ class MultiCursorMixin:
         QApplication.clipboard().setText(clip_text)
 
     def multi_cursor_cut(self):
-        """Multi-cursor copy then removeSelectedText"""
+        """Multi-cursor copy then removeSelectedText."""
         self.multi_cursor_copy()
         self.textCursor().beginEditBlock()
         for cursor in self.all_cursors:
@@ -574,7 +570,7 @@ class MultiCursorMixin:
         self.skip_rstrip = True
         self.sig_will_paste_text.emit(clip_text)
         lines = clip_text.splitlines()
-        
+
         if self.get_conf('multicursor_paste/always_full'):
             lines = itertools.repeat(clip_text)
         elif self.get_conf('multicursor_paste/conditional_spread'):
@@ -601,7 +597,7 @@ class MultiCursorMixin:
         self.skip_rstrip = False
 
     def for_each_cursor(self, method, merge_increasing=True):
-        """Wrap callable to execute once for each cursor"""
+        """Wrap callable to execute once for each cursor."""
         @functools.wraps(method)
         def wrapper():
             self.textCursor().beginEditBlock()
@@ -629,7 +625,7 @@ class MultiCursorMixin:
         return wrapper
 
     def clears_extra_cursors(self, method):
-        """Wrap callable to clear extra_cursors prior to calling"""
+        """Wrap callable to clear extra_cursors prior to calling."""
         @functools.wraps(method)
         def wrapper():
             self.clear_extra_cursors()
@@ -638,7 +634,7 @@ class MultiCursorMixin:
         return wrapper
 
     def restrict_single_cursor(self, method):
-        """Wrap callable to only execute if there is a single cursor"""
+        """Wrap callable to only execute if there is a single cursor."""
         @functools.wraps(method)
         def wrapper():
             if not self.extra_cursors:

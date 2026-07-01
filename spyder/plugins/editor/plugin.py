@@ -4,7 +4,7 @@
 # Licensed under the terms of the MIT License
 # (see spyder/__init__.py for details)
 
-"""Editor Plugin"""
+"""Editor Plugin."""
 
 from __future__ import annotations
 from collections.abc import Callable
@@ -59,9 +59,7 @@ logger = logging.getLogger(__name__)
 
 
 class Editor(SpyderDockablePlugin):
-    """
-    Editor plugin.
-    """
+    """Editor plugin."""
 
     NAME = 'editor'
     REQUIRES = [Plugins.Console, Plugins.Application, Plugins.Preferences]
@@ -314,7 +312,7 @@ class Editor(SpyderDockablePlugin):
             RunContext.Cell,
             _("Run cell"),
             icon=self.create_icon('run_cell'),
-            tip=_("Run cell"),
+            tip=_("Run the current cell"),
             shortcut_context=self.NAME,
             register_shortcut=True,
             add_to_toolbar=True,
@@ -324,7 +322,7 @@ class Editor(SpyderDockablePlugin):
             RunContext.Cell,
             _("Run cell and advance"),
             icon=self.create_icon('run_cell_advance'),
-            tip=_("Run cell and advance"),
+            tip=_("Run the current cell and move to the next one"),
             shortcut_context=self.NAME,
             register_shortcut=True,
             add_to_toolbar=True,
@@ -333,8 +331,8 @@ class Editor(SpyderDockablePlugin):
         )
         run.create_run_button(
             RunContext.Cell,
-            _("Re-run last cell"),
-            tip=_("Re run last cell "),
+            _("Run last cell again"),
+            tip=_("Run the last cell again"),
             shortcut_context=self.NAME,
             register_shortcut=True,
             add_to_menu=True,
@@ -344,7 +342,7 @@ class Editor(SpyderDockablePlugin):
             RunContext.Selection,
             _("Run &current line/selection"),
             icon=self.create_icon('run_selection'),
-            tip=_("Run current line or selection"),
+            tip=_("Run the current line or selection"),
             shortcut_context=self.NAME,
             register_shortcut=True,
             add_to_toolbar=True,
@@ -354,7 +352,7 @@ class Editor(SpyderDockablePlugin):
         run.create_run_button(
             RunContext.Selection,
             _("Run &to line"),
-            tip=_("Run selection up to the current line"),
+            tip=_("Run up to the current line"),
             shortcut_context=self.NAME,
             register_shortcut=True,
             add_to_toolbar=False,
@@ -364,7 +362,7 @@ class Editor(SpyderDockablePlugin):
         run.create_run_button(
             RunContext.Selection,
             _("Run &from line"),
-            tip=_("Run selection from the current line"),
+            tip=_("Run from the current line"),
             shortcut_context=self.NAME,
             register_shortcut=True,
             add_to_toolbar=False,
@@ -1420,9 +1418,7 @@ class Editor(SpyderDockablePlugin):
     # ---- Methods related to the Application plugin
     # ------------------------------------------------------------------------
     def _enable_file_action(self, action_name: str, enabled: bool) -> None:
-        """
-        Enable or disable file action for this plugin.
-        """
+        """Enable or disable file action for this plugin."""
         application = self.get_plugin(Plugins.Application, error=False)
         if application:
             application.enable_file_action(action_name, enabled, self.NAME)

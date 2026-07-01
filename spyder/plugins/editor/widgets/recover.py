@@ -4,7 +4,7 @@
 # Licensed under the terms of the MIT License
 # (see spyder/__init__.py for details)
 
-"""Dialog window for recovering files from autosave"""
+"""Dialog window for recovering files from autosave."""
 
 # Standard library imports
 from os import path as osp
@@ -35,6 +35,7 @@ from spyder.config.base import running_under_pytest
 
 class RecoveryDialog(QDialog):
     """Dialog window to allow users to recover from autosave files."""
+
     def __init__(self, autosave_mapping, parent=None):
         """
         Constructor
@@ -137,9 +138,12 @@ class RecoveryDialog(QDialog):
 
     def add_label(self):
         """Add label with explanation at top of dialog window."""
-        txt = _('Autosave files found. What would you like to do?\n\n'
-                'This dialog will be shown again on next startup if any '
-                'autosave files are not restored, moved or deleted.')
+        txt = _(
+            "Spyder found autosave files from your last session. "
+            "What would you like to do?\n\n"
+            "If any autosave files are not restored, moved, or deleted, "
+            "this dialog will be shown again on the next startup."
+        )
         label = QLabel(txt, self)
         label.setWordWrap(True)
         self.layout.addWidget(label)
@@ -175,23 +179,23 @@ class RecoveryDialog(QDialog):
             widget = QWidget()
             layout = QHBoxLayout()
 
-            tooltip = _('Recover the autosave file to its original location, '
-                        'replacing the original if it exists.')
+            tooltip = _('Restore the autosave file to its original location, '
+                        'replacing the original if it exists')
             button = QPushButton(_('Restore'))
             button.setToolTip(tooltip)
             button.clicked[bool].connect(
                     lambda checked, my_idx=idx: self.restore(my_idx))
             layout.addWidget(button)
 
-            tooltip = _('Delete the autosave file.')
-            button = QPushButton(_('Discard'))
+            tooltip = _('Delete the autosave file')
+            button = QPushButton(_('Delete'))
             button.setToolTip(tooltip)
             button.clicked[bool].connect(
                     lambda checked, my_idx=idx: self.discard(my_idx))
             layout.addWidget(button)
 
             tooltip = _('Display the autosave file (and the original, if it '
-                        'exists) in Spyder\'s Editor. You will have to move '
+                        'exists) in Spyder\'s editor. You will have to move '
                         'or delete it manually.')
             button = QPushButton(_('Open'))
             button.setToolTip(tooltip)
@@ -214,7 +218,7 @@ class RecoveryDialog(QDialog):
         This function takes the file data produced by gather_file_data().
         """
         if not data:
-            return _('<i>File name not recorded</i>')
+            return _('<i>File name not found</i>')
         res = data['name']
         try:
             mtime_as_str = time.strftime('%Y-%m-%d %H:%M:%S',
@@ -247,7 +251,7 @@ class RecoveryDialog(QDialog):
             orig_name = orig['name']
         else:
             orig_name, ignored = getsavefilename(
-                self, _('Restore autosave file to ...'),
+                self, _('Restore autosave file'),
                 osp.basename(autosave['name']))
             if not orig_name:
                 return
@@ -272,7 +276,7 @@ class RecoveryDialog(QDialog):
             os.remove(autosave['name'])
             self.deactivate(idx)
         except EnvironmentError as error:
-            text = _('Unable to discard {}').format(autosave['name'])
+            text = _('Unable to delete {}').format(autosave['name'])
             self.report_error(text, error)
 
     def open_files(self, idx):
@@ -285,7 +289,7 @@ class RecoveryDialog(QDialog):
     def report_error(self, text, error):
         heading = _('Error message:')
         msgbox = QMessageBox(
-            QMessageBox.Critical, _('Restore'),
+            QMessageBox.Critical, _('Recover'),
             '<b>{}</b><br><br>{}<br>{}'.format(text, heading, error),
             parent=self)
         msgbox.exec_()

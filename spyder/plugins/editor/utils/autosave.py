@@ -313,7 +313,7 @@ class AutosaveForStack(object):
         try:
             os.remove(autosave_filename)
         except (FileNotFoundError, OSError) as error:
-            action = (_('Error while removing autosave file {}')
+            action = (_('Error while deleting autosave file {}')
                       .format(autosave_filename))
             msgbox = AutosaveErrorDialog(action, error)
             msgbox.exec_if_enabled()

@@ -4,7 +4,7 @@
 # Licensed under the terms of the MIT License
 # (see spyder/__init__.py for details)
 
-"""Editor Main Widget"""
+"""Editor Main Widget."""
 
 # pylint: disable=C0103
 # pylint: disable=R0903
@@ -82,9 +82,8 @@ class EditorWidgetMenus:
 
 
 class EditorMainWidget(PluginMainWidget):
-    """
-    Multi-file Editor widget
-    """
+    """Multi-file Editor widget."""
+
     TEMPFILE_PATH = get_conf_path('temp.py')
     TEMPLATE_PATH = get_conf_path('template.py')
 
@@ -341,18 +340,20 @@ class EditorMainWidget(PluginMainWidget):
         )
         self.print_action = self.create_action(
             EditorWidgetActions.Print,
-            text=_("&Print..."),
+            text=_("&Print…"),
             icon=self.create_icon('print'),
-            tip=_("Print current file..."),
+            tip=_("Print the current file"),
             triggered=self.print_file
         )
         self.workdir_action = self.create_action(
             EditorWidgetActions.SetWorkingDirectory,
             text=_("Set console working directory"),
-            icon=self.create_icon('DirOpenIcon'),
-            tip=_("Set current console (and file explorer) working "
-                  "directory to current script directory"),
-            triggered=self.__set_workdir
+            icon=self.create_icon("DirOpenIcon"),
+            tip=_(
+                "Set the console and file explorer to the "
+                "current script's directory"
+            ),
+            triggered=self.__set_workdir,
         )
 
         # Fixes spyder-ide/spyder#6055.
@@ -374,7 +375,7 @@ class EditorMainWidget(PluginMainWidget):
         # ---- Find/Search operations
         self.gotoline_action = self.create_action(
             EditorWidgetActions.GoToLine,
-            text=_("Go to line..."),
+            text=_("Go to line…"),
             icon=self.create_icon('gotoline'),
             triggered=self.go_to_line,
             context=Qt.WidgetShortcut,
@@ -409,13 +410,20 @@ class EditorMainWidget(PluginMainWidget):
             EditorWidgetActions.ShowCodeFolding,
             _("Show code folding"),
             'code_folding',
-            method='set_code_folding_enabled'
+            method='set_code_folding_enabled',
+            tip=_(
+                "Show arrows in the margin to collapse and expand "
+                "code by indent level"
+            ),
         )
         self.show_classfunc_dropdown_action = self._create_checkable_action(
             EditorWidgetActions.ShowClassFuncDropdown,
             _("Show class/function selector"),
             'show_class_func_dropdown',
-            method='set_classfunc_dropdown_visible'
+            method='set_classfunc_dropdown_visible',
+            tip=_(
+                "Show a selector to go to the file's classes and functions"
+            ),
         )
         self.show_docstring_warnings_action = self._create_checkable_action(
             EditorWidgetActions.ShowDoctringWarnings,
@@ -442,11 +450,14 @@ class EditorMainWidget(PluginMainWidget):
         # Todo menu
         self.todo_list_action = self.create_action(
             EditorWidgetActions.ShowTodoList,
-            text=_("Show todo list"),
-            icon=self.create_icon('todo_list'),
-            tip=_("Show comments list (TODO/FIXME/XXX/HINT/TIP/@todo/"
-                  "HACK/BUG/OPTIMIZE/!!!/???)"),
-            triggered=lambda: None
+            text=_("Code annotation list"),
+            icon=self.create_icon("todo_list"),
+            tip=_(
+                "Show the list of code annotations: <code>TODO, FIXME, XXX, "
+                "HINT, TIP, @todo, HACK, BUG, OPTIMIZE, !!!, ???</code> (and "
+                "their lowercase variants)"
+            ),
+            triggered=lambda: None,
         )
         self.todo_menu = self.create_menu(EditorWidgetMenus.TodoList)
         todo_menu_css = self.todo_menu.css
@@ -458,9 +469,9 @@ class EditorMainWidget(PluginMainWidget):
         # Warnings menu
         self.warning_list_action = self.create_action(
             EditorWidgetActions.ShowCodeAnalysisList,
-            text=_("Show warning/error list"),
+            text=_("Warning/error list"),
             icon=self.create_icon('wng_list'),
-            tip=_("Show code analysis warnings/errors"),
+            tip=_("Show the list of warnings and errors from code analysis"),
             triggered=lambda: None
         )
         self.warning_menu = self.create_menu(
@@ -476,7 +487,7 @@ class EditorMainWidget(PluginMainWidget):
             EditorWidgetActions.GoToPreviousWarning,
             text=_("Previous warning/error"),
             icon=self.create_icon('prev_wng'),
-            tip=_("Go to previous code analysis warning/error"),
+            tip=_("Go to the previous code analysis warning or error"),
             triggered=self.go_to_previous_warning,
             context=Qt.WidgetShortcut,
             register_shortcut=True
@@ -485,7 +496,7 @@ class EditorMainWidget(PluginMainWidget):
             EditorWidgetActions.GoToNextWarning,
             text=_("Next warning/error"),
             icon=self.create_icon('next_wng'),
-            tip=_("Go to next code analysis warning/error"),
+            tip=_("Go to the next code analysis warning or error"),
             triggered=self.go_to_next_warning,
             context=Qt.WidgetShortcut,
             register_shortcut=True
@@ -494,9 +505,9 @@ class EditorMainWidget(PluginMainWidget):
         # Cursor actions
         self.previous_edit_cursor_action = self.create_action(
             EditorWidgetActions.GoToLastEditLocation,
-            text=_("Last edit location"),
+            text=_("Last edit position"),
             icon=self.create_icon('last_edit_location'),
-            tip=_("Go to last edit location"),
+            tip=_("Go to the last edit position"),
             triggered=self.go_to_last_edit_location,
             context=Qt.WidgetShortcut,
             register_shortcut=True
@@ -505,7 +516,7 @@ class EditorMainWidget(PluginMainWidget):
             EditorWidgetActions.GoToPreviousCursorPosition,
             text=_("Previous cursor position"),
             icon=self.create_icon('prev_cursor'),
-            tip=_("Go to previous cursor position"),
+            tip=_("Go to the previous cursor position"),
             triggered=self.go_to_previous_cursor_position,
             context=Qt.WidgetShortcut,
             register_shortcut=True
@@ -514,7 +525,7 @@ class EditorMainWidget(PluginMainWidget):
             EditorWidgetActions.GoToNextCursorPosition,
             text=_("Next cursor position"),
             icon=self.create_icon('next_cursor'),
-            tip=_("Go to next cursor position"),
+            tip=_("Go to the next cursor position"),
             triggered=self.go_to_next_cursor_position,
             context=Qt.WidgetShortcut,
             register_shortcut=True
@@ -560,8 +571,11 @@ class EditorMainWidget(PluginMainWidget):
         self.fixindentation_action = self.create_action(
             EditorWidgetActions.FixIndentation,
             text=_("Convert tabs to spaces"),
-            tip=_("Replace tabs with the configured number of spaces"),
-            triggered=self.fix_indentation
+            tip=_(
+                "Convert tabs to the set number of spaces in Preferences "
+                "> Editor > Source code"
+            ),
+            triggered=self.fix_indentation,
         )
 
         # Autofix actions
@@ -572,7 +586,7 @@ class EditorMainWidget(PluginMainWidget):
         )
         self.formatting_action = self.create_action(
             EditorWidgetActions.FormatCode,
-            text=_('Format file or selection with {0}').format(
+            text=_('Format file/selection with {0}').format(
                 formatter.capitalize()
             ),
             context=Qt.WidgetShortcut,
@@ -584,18 +598,18 @@ class EditorMainWidget(PluginMainWidget):
         # ---- Edit operations
         self.create_new_cell = self.create_action(
             EditorWidgetActions.NewCell,
-            text=_("Create new cell"),
+            text=_("New cell"),
             icon=self.create_icon('new_cell'),
-            tip=_("Create new cell at the current line"),
+            tip=_("Create a cell at the current line"),
             triggered=self.create_cell,
             context=Qt.WidgetShortcut,
             register_shortcut=True
         )
         self.toggle_comment_action = self.create_action(
             EditorWidgetActions.ToggleComment,
-            text=_("Comment") + "/" + _("uncomment"),
+            text=_("Toggle comment"),
             icon=self.create_icon('comment'),
-            tip=_("Toggle commenting the current line or selection"),
+            tip=_("Toggle comments on the current line or selection"),
             triggered=self.toggle_comment,
             context=Qt.WidgetShortcut,
             register_shortcut=True
@@ -603,7 +617,7 @@ class EditorMainWidget(PluginMainWidget):
         self.blockcomment_action = self.create_action(
             EditorWidgetActions.Blockcomment,
             text=_("Add &block comment"),
-            tip=_("Add block comment around current line or selection"),
+            tip=_("Add a block comment around current line or selection"),
             triggered=self.blockcomment,
             context=Qt.WidgetShortcut,
             register_shortcut=True
@@ -611,7 +625,7 @@ class EditorMainWidget(PluginMainWidget):
         self.unblockcomment_action = self.create_action(
             EditorWidgetActions.Unblockcomment,
             text=_("R&emove block comment"),
-            tip=_("Remove comment block around current line or selection"),
+            tip=_("Remove a block comment around current line or selection"),
             triggered=self.unblockcomment,
             context=Qt.WidgetShortcut,
             register_shortcut=True
@@ -620,21 +634,21 @@ class EditorMainWidget(PluginMainWidget):
         # ---- Folding actions
         self.collapse_all_action = self.create_action(
             EditorWidgetActions.CollapseAll,
-            text=_('Collapse all folding regions'),
+            text=_('Fold all'),
             context=Qt.WidgetShortcut,
             triggered=self.collapse_all,
             register_shortcut=True
         )
         self.expand_all_action = self.create_action(
             EditorWidgetActions.ExpandAll,
-            text=_('Expand all folding regions'),
+            text=_('Unfold all'),
             context=Qt.WidgetShortcut,
             triggered=self.expand_all,
             register_shortcut=True
         )
         self.collapse_expand_action = self.create_action(
             EditorWidgetActions.CollapseExpand,
-            text=_('Collapse/expand current folding region'),
+            text=_('Toggle current folding region'),
             context=Qt.WidgetShortcut,
             triggered=self.collapse_expand_current_region,
             register_shortcut=True
@@ -648,7 +662,7 @@ class EditorMainWidget(PluginMainWidget):
             EditorWidgetActions.Indent,
             text=_("Indent"),
             icon=self.create_icon('indent'),
-            tip=_("Indent current line or selection"),
+            tip=_("Indent the current line or selection"),
             triggered=self.indent,
             context=Qt.WidgetShortcut,
             register_shortcut=True
@@ -657,7 +671,7 @@ class EditorMainWidget(PluginMainWidget):
             EditorWidgetActions.Unindent,
             text=_("Unindent"),
             icon=self.create_icon('unindent'),
-            tip=_("Unindent current line or selection"),
+            tip=_("Unindent the current line or selection"),
             triggered=self.unindent,
             context=Qt.WidgetShortcut,
             register_shortcut=True
@@ -666,18 +680,18 @@ class EditorMainWidget(PluginMainWidget):
         # ---------------------------------------------------------------------
         self.text_uppercase_action = self.create_action(
             EditorWidgetActions.TransformToUppercase,
-            text=_("Toggle UPPERCASE"),
+            text=_("Convert to uppercase"),
             icon=self.create_icon('toggle_uppercase'),
-            tip=_("Change current line or selection to UPPERCASE text"),
+            tip=_("Convert the current line or selection to uppercase"),
             triggered=self.text_uppercase,
             context=Qt.WidgetShortcut,
             register_shortcut=True
         )
         self.text_lowercase_action = self.create_action(
             EditorWidgetActions.TransformToLowercase,
-            text=_("Toggle lowercase"),
+            text=_("Convert to lowercase"),
             icon=self.create_icon('toggle_lowercase'),
-            tip=_("Change current line or selection to lowercase text"),
+            tip=_("Convert the current line or selection to lowercase"),
             triggered=self.text_lowercase,
             context=Qt.WidgetShortcut,
             register_shortcut=True
@@ -696,7 +710,7 @@ class EditorMainWidget(PluginMainWidget):
         # ---- CodeEditor context menu
         self.create_action(
             CodeEditorActions.ClearAllOutput,
-            text=_('Clear all ouput'),
+            text=_('Clear all output'),
             icon=self.create_icon('ipython_console'),
             triggered=self._current_editor_clear_all_output,
         )
@@ -736,7 +750,7 @@ class EditorMainWidget(PluginMainWidget):
         )
         self.create_action(
             CodeEditorActions.ZoomReset,
-            text=_('Zoom reset'),
+            text=_('Reset zoom'),
             register_shortcut=True,
             triggered=self._current_editor_zoom_reset,
         )
@@ -852,7 +866,7 @@ class EditorMainWidget(PluginMainWidget):
                     pass
 
     def change_visibility(self, state, force_focus=None):
-        """DockWidget visibility has changed"""
+        """DockWidget visibility has changed."""
         super().change_visibility(state)
         try:
             if self.dockwidget is None:
@@ -890,7 +904,7 @@ class EditorMainWidget(PluginMainWidget):
         return self._plugin.get_color_scheme()
 
     def restore_scrollbar_position(self):
-        """Restoring scrollbar position after main window is visible"""
+        """Restoring scrollbar position after main window is visible."""
         # Widget is now visible, we may center cursor on top level editor:
         try:
             self.get_current_editor().centerCursor()
@@ -1067,7 +1081,7 @@ class EditorMainWidget(PluginMainWidget):
         )
 
     def refresh(self):
-        """Refresh editor widgets"""
+        """Refresh editor widgets."""
         editorstack = self.get_current_editorstack()
         editorstack.refresh()
         self.refresh_save_actions()
@@ -1126,7 +1140,7 @@ class EditorMainWidget(PluginMainWidget):
         )
 
     def update_font(self, font):
-        """Update font from Preferences"""
+        """Update font from Preferences."""
         self._font = font
         color_scheme = self._get_color_scheme()
         for editorstack in self.editorstacks:
@@ -1136,7 +1150,9 @@ class EditorMainWidget(PluginMainWidget):
                 comp_widget = finfo.editor.completion_widget
                 comp_widget.setup_appearance(completion_size, font)
 
-    def _create_checkable_action(self, name, text, conf_name, method=''):
+    def _create_checkable_action(
+        self, name, text, conf_name, method="", tip=None
+    ):
         """
         Helper function to create a checkable action.
 
@@ -1151,12 +1167,14 @@ class EditorMainWidget(PluginMainWidget):
         method: str, optional
             Name of EditorStack class that will be used to update the changes
             in each editorstack.
+        tip: str, optional
+            Tooltip to define for action on menu or toolbar.
         """
         def toggle(checked):
             self.switch_to_plugin()
             self._toggle_checkable_action(checked, method, conf_name)
 
-        action = self.create_action(name, text=text, toggled=toggle)
+        action = self.create_action(name, text=text, tip=tip, toggled=toggle)
         action.blockSignals(True)
 
         if conf_name not in ['pydocstyle']:
@@ -1468,7 +1486,7 @@ class EditorMainWidget(PluginMainWidget):
         self.autosave.register_autosave_for_stack(editorstack.autosave)
 
     def unregister_editorstack(self, editorstack):
-        """Removing editorstack only if it's not the last remaining"""
+        """Removing editorstack only if it's not the last remaining."""
         logger.debug("Unregistering EditorStack")
         self.remove_last_focused_editorstack(editorstack)
         if len(self.editorstacks) > 1:
@@ -1505,7 +1523,7 @@ class EditorMainWidget(PluginMainWidget):
     @Slot(str, str, str)
     def file_saved_in_editorstack(self, editorstack_id_str,
                                   original_filename, filename):
-        """A file was saved in editorstack, this notifies others"""
+        """A file was saved in editorstack, this notifies others."""
         for editorstack in self.editorstacks:
             if str(id(editorstack)) != editorstack_id_str:
                 editorstack.file_saved_in_other_editorstack(original_filename,
@@ -1514,7 +1532,7 @@ class EditorMainWidget(PluginMainWidget):
     # ---- Handling editor windows
     # -------------------------------------------------------------------------
     def setup_other_windows(self):
-        """Setup toolbars and menus for 'New window' instances"""
+        """Setup toolbars and menus for 'New window' instances."""
         # Create pending new windows:
         for layout_settings in self.editorwindows_to_be_created:
             win = self.create_new_window()
@@ -1645,7 +1663,7 @@ class EditorMainWidget(PluginMainWidget):
         self.sig_file_action_enabled.emit(ApplicationActions.SaveAll, state)
 
     def update_warning_menu(self):
-        """Update warning list menu"""
+        """Update warning list menu."""
         editor = self.get_current_editor()
         check_results = editor.get_current_warnings()
         self.warning_menu.clear()
@@ -1665,7 +1683,7 @@ class EditorMainWidget(PluginMainWidget):
             self.warning_menu.addAction(action)
 
     def update_todo_menu(self):
-        """Update todo list menu"""
+        """Update todo list menu."""
         editorstack = self.get_current_editorstack()
         results = editorstack.get_todo_results()
         self.todo_menu.clear()
@@ -1770,7 +1788,7 @@ class EditorMainWidget(PluginMainWidget):
     # ---- File I/O
     # -------------------------------------------------------------------------
     def __load_temp_file(self):
-        """Load temporary file from a text file in user home directory"""
+        """Load temporary file from a text file in user home directory."""
         if not osp.isfile(self.TEMPFILE_PATH):
             # Creating temporary file
             default = ['# -*- coding: utf-8 -*-',
@@ -1789,7 +1807,7 @@ class EditorMainWidget(PluginMainWidget):
 
     @Slot()
     def __set_workdir(self):
-        """Set current script directory as working directory"""
+        """Set current script directory as working directory."""
         fname = self.get_current_filename()
         if fname is not None:
             directory = osp.dirname(osp.abspath(fname))
@@ -1909,7 +1927,7 @@ class EditorMainWidget(PluginMainWidget):
             self.save(force=True)
 
     def edit_template(self):
-        """Edit new file template"""
+        """Edit new file template."""
         self.load(self.TEMPLATE_PATH)
 
     def load(
@@ -2106,7 +2124,7 @@ class EditorMainWidget(PluginMainWidget):
         self.sig_redirect_stdio_requested.emit(True)
 
         if answer == QDialog.Accepted:
-            self.starting_long_process.emit(_("Printing..."))
+            self.starting_long_process.emit(_("Printing…"))
             printer.setDocName(filename)
             self._print_editor.print_(printer)
             self.ending_long_process.emit("")
@@ -2149,7 +2167,7 @@ class EditorMainWidget(PluginMainWidget):
 
     @Slot()
     def close_file(self):
-        """Close current file"""
+        """Close current file."""
         filename = self.get_current_filename()
         if self.can_close_file(filename=filename):
             editorstack = self.get_current_editorstack()
@@ -2157,12 +2175,12 @@ class EditorMainWidget(PluginMainWidget):
 
     @Slot()
     def close_all_files(self):
-        """Close all opened scripts"""
+        """Close all opened scripts."""
         self.editorstacks[0].close_all_files()
 
     @Slot()
     def save(self, index=None, force=False):
-        """Save file"""
+        """Save file."""
         if isinstance(index, bool):
             index = None
         editorstack = self.get_current_editorstack()
@@ -2170,7 +2188,7 @@ class EditorMainWidget(PluginMainWidget):
 
     @Slot()
     def save_as(self):
-        """Save *as* the currently edited file"""
+        """Save *as* the currently edited file."""
         editorstack = self.get_current_editorstack()
         if editorstack.save_as():
             fname = editorstack.get_current_filename()
@@ -2184,43 +2202,43 @@ class EditorMainWidget(PluginMainWidget):
 
     @Slot()
     def save_copy_as(self):
-        """Save *copy as* the currently edited file"""
+        """Save *copy as* the currently edited file."""
         editorstack = self.get_current_editorstack()
         editorstack.save_copy_as()
 
     @Slot()
     def save_all(self, save_new_files=True):
-        """Save all opened files"""
+        """Save all opened files."""
         self.get_current_editorstack().save_all(save_new_files=save_new_files)
 
     @Slot()
     def revert(self):
-        """Revert the currently edited file from disk"""
+        """Revert the currently edited file from disk."""
         editorstack = self.get_current_editorstack()
         editorstack.revert()
 
     @Slot()
     def find(self):
-        """Find slot"""
+        """Find slot."""
         editorstack = self.get_current_editorstack()
         editorstack.find_widget.show()
         editorstack.find_widget.search_text.setFocus()
 
     @Slot()
     def find_next(self):
-        """Find next slot"""
+        """Find next slot."""
         editorstack = self.get_current_editorstack()
         editorstack.find_widget.find_next()
 
     @Slot()
     def find_previous(self):
-        """Find previous slot"""
+        """Find previous slot."""
         editorstack = self.get_current_editorstack()
         editorstack.find_widget.find_previous()
 
     @Slot()
     def replace(self):
-        """Replace slot"""
+        """Replace slot."""
         editorstack = self.get_current_editorstack()
         editorstack.find_widget.show_replace()
 
@@ -2257,18 +2275,18 @@ class EditorMainWidget(PluginMainWidget):
         self.active_project_path = active_project_path
 
     def close_file_from_name(self, filename):
-        """Close file from its name"""
+        """Close file from its name."""
         filename = osp.abspath(str(filename))
         index = self.get_filename_index(filename)
         if index is not None:
             self.editorstacks[0].close_file(index)
 
     def removed(self, filename):
-        """File was removed in file explorer widget or in project explorer"""
+        """File was removed in file explorer widget or in project explorer."""
         self.close_file_from_name(filename)
 
     def removed_tree(self, dirname):
-        """Directory was removed in project explorer widget"""
+        """Directory was removed in project explorer widget."""
         dirname = osp.abspath(str(dirname))
         for fname in self.get_filenames():
             if osp.abspath(fname).startswith(dirname):
@@ -2349,14 +2367,14 @@ class EditorMainWidget(PluginMainWidget):
     # -------------------------------------------------------------------------
     @Slot()
     def indent(self):
-        """Indent current line or selection"""
+        """Indent current line or selection."""
         editor = self.get_current_editor()
         if editor is not None:
             editor.indent()
 
     @Slot()
     def unindent(self):
-        """Unindent current line or selection"""
+        """Unindent current line or selection."""
         editor = self.get_current_editor()
         if editor is not None:
             editor.unindent()
@@ -2377,21 +2395,21 @@ class EditorMainWidget(PluginMainWidget):
 
     @Slot()
     def toggle_comment(self):
-        """Comment current line or selection"""
+        """Comment current line or selection."""
         editor = self.get_current_editor()
         if editor is not None:
             editor.toggle_comment()
 
     @Slot()
     def blockcomment(self):
-        """Block comment current line or selection"""
+        """Block comment current line or selection."""
         editor = self.get_current_editor()
         if editor is not None:
             editor.blockcomment()
 
     @Slot()
     def unblockcomment(self):
-        """Un-block comment current line or selection"""
+        """Un-block comment current line or selection."""
         editor = self.get_current_editor()
         if editor is not None:
             editor.unblockcomment()
@@ -2440,7 +2458,7 @@ class EditorMainWidget(PluginMainWidget):
         self.switch_to_plugin()
         editorstack = self.get_current_editorstack()
         editorstack.fix_indentation()
-    
+
     @Slot()
     def collapse_all(self):
         self.switch_to_plugin()
@@ -2454,7 +2472,7 @@ class EditorMainWidget(PluginMainWidget):
         editor = self.get_current_editor()
         if editor is not None:
             editor.expand_all()
-    
+
     @Slot()
     def collapse_expand_current_region(self):
         self.switch_to_plugin()
@@ -2684,7 +2702,7 @@ class EditorMainWidget(PluginMainWidget):
 
     @Slot()
     def go_to_line(self, line=None):
-        """Open 'go to line' dialog"""
+        """Open 'go to line' dialog."""
         if isinstance(line, bool):
             line = None
         editorstack = self.get_current_editorstack()
@@ -2721,9 +2739,7 @@ class EditorMainWidget(PluginMainWidget):
         return editorstack.data[index].editor
 
     def handle_run_cell(self, cell_name, filename):
-        """
-        Get cell code from cell name and file name.
-        """
+        """Get cell code from cell name and file name."""
         editorstack = self._get_editorstack()
         editor = self.get_editor(filename)
 
@@ -3017,7 +3033,7 @@ class EditorMainWidget(PluginMainWidget):
     # ---- Zoom in/out/reset
     # -------------------------------------------------------------------------
     def zoom(self, factor):
-        """Zoom in/out/reset"""
+        """Zoom in/out/reset."""
         editor = self.get_current_editorstack().get_current_editor()
         if factor == 0:
             font = self._font
@@ -3187,11 +3203,11 @@ class EditorMainWidget(PluginMainWidget):
         self.sig_open_files_finished.emit()
 
     def save_open_files(self):
-        """Save the list of open files"""
+        """Save the list of open files."""
         self.set_conf('filenames', self.get_filenames())
 
     def set_create_new_file_if_empty(self, value):
-        """Change the value of create_new_file_if_empty"""
+        """Change the value of create_new_file_if_empty."""
         for editorstack in self.editorstacks:
             editorstack.create_new_file_if_empty = value
 
@@ -3313,7 +3329,7 @@ class EditorMainWidget(PluginMainWidget):
                 self.remove_item_from_menu(action_name, menu)
 
     def _setup_codeeditor_context_menu(self):
-        """Setup CodeEditor context menu"""
+        """Setup CodeEditor context menu."""
         # -- Menus
         main_menu = self.create_menu(CodeEditorMenus.ContextMenu)
         readonly_menu = self.create_menu(CodeEditorMenus.ReadOnlyMenu)

@@ -4131,7 +4131,7 @@ class CodeEditor(
                     self,
                     _('Information'),
                     _('This file is not part of a local repository or '
-                      'upstream/origin remotes are not defined!'),
+                      'upstream/origin remotes are not defined'),
                     QMessageBox.Ok,
                 )
         self.hide_tooltip()

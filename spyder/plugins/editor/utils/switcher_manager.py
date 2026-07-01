@@ -4,9 +4,7 @@
 # Licensed under the terms of the MIT License
 # (see spyder/__init__.py for details)
 
-"""
-Editor Switcher manager.
-"""
+"""Editor Switcher manager."""
 
 # Standard library imports
 import os.path as osp
@@ -62,8 +60,8 @@ class EditorSwitcherManager(SpyderConfigurationAccessor):
 
     def setup_switcher(self):
         """Setup switcher modes and signals."""
-        self._switcher.add_mode(self.LINE_MODE, _('Go to Line'))
-        self._switcher.add_mode(self.SYMBOL_MODE, _('Go to Symbol in File'))
+        self._switcher.add_mode(self.LINE_MODE, _('Go to line'))
+        self._switcher.add_mode(self.SYMBOL_MODE, _('Go to symbol in file'))
         self._switcher.sig_mode_selected.connect(self.handle_switcher_modes)
         self._switcher.sig_item_selected.connect(
             self.handle_switcher_selection
@@ -208,7 +206,7 @@ class EditorSwitcherManager(SpyderConfigurationAccessor):
                 data=data,
                 last_item=last_item
             )
-            
+
             init_row = idx if symbol_start <= self._current_line else init_row
             idx += 1
 
