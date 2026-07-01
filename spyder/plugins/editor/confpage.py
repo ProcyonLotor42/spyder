@@ -316,9 +316,9 @@ class EditorConfigPage(PluginConfigPage, SpyderConfigurationObserver):
             'check_eol_chars',
             default=True,
             tip=_(
-                "Converts mixed end-of-line characters when opening a file, "
-                "and shows a warning. Recommended for Windows, as mixed "
-                "characters can cause syntax errors in the console."
+                "Normalizes mixed end-of-line characters to system EOL when "
+                "opening a file. Recommended for Windows, as mixed characters "
+                "can cause syntax errors in the console."
             ),
         )
         convert_eol_on_save_box = newcb(
