@@ -4,7 +4,7 @@
 # Licensed under the terms of the MIT License
 # (see spyder/__init__.py for details)
 
-"""Mouse shortcut editor dialog"""
+"""Mouse shortcut editor dialog."""
 
 # Standard library imports
 from itertools import combinations
@@ -54,7 +54,7 @@ class MouseShortcutEditor(QDialog, SpyderConfigurationAccessor):
 
         self.scrollflag_shortcut = ShortcutSelector(
             self,
-            _("Jump within the document in the scroll flags area"),
+            _("Jump within the document in the scroll flags area:"),
             mouse_shortcuts['jump_to_position']
         )
         self.scrollflag_shortcut.sig_changed.connect(self.validate)
@@ -62,7 +62,7 @@ class MouseShortcutEditor(QDialog, SpyderConfigurationAccessor):
 
         self.goto_def_shortcut = ShortcutSelector(
             self,
-            _("Go to a definition"),
+            _("Go to definition:"),
             mouse_shortcuts['goto_definition']
         )
         self.goto_def_shortcut.sig_changed.connect(self.validate)
@@ -70,7 +70,7 @@ class MouseShortcutEditor(QDialog, SpyderConfigurationAccessor):
 
         self.add_cursor_shortcut = ShortcutSelector(
             self,
-            _("Add/remove a cursor"),
+            _("Add/remove cursor:"),
             mouse_shortcuts['add_remove_cursor']
         )
         self.add_cursor_shortcut.sig_changed.connect(self.validate)
@@ -78,7 +78,7 @@ class MouseShortcutEditor(QDialog, SpyderConfigurationAccessor):
 
         self.column_cursor_shortcut = ShortcutSelector(
             self,
-            _("Add a column of cursors"),
+            _("Add column of cursors:"),
             mouse_shortcuts['column_cursor']
         )
         self.column_cursor_shortcut.sig_changed.connect(self.validate)
@@ -106,7 +106,7 @@ class MouseShortcutEditor(QDialog, SpyderConfigurationAccessor):
         self.setLayout(layout)
 
     def apply_mouse_shortcuts(self):
-        """Set new config to CONF"""
+        """Set new config to CONF."""
         self.set_conf('mouse_shortcuts', self.mouse_shortcuts)
         self.scrollflag_shortcut.apply_modifiers()
         self.goto_def_shortcut.apply_modifiers()
