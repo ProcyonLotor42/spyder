@@ -4,9 +4,7 @@
 # Licensed under the terms of the MIT License
 # (see spyder/__init__.py for details)
 
-"""
-Explorer Main Widget.
-"""
+"""Explorer Main Widget."""
 
 # Standard library imports
 import logging
@@ -279,7 +277,7 @@ class ExplorerWidget(PluginMainWidget):
         )
         filters_action = self.create_action(
             ExplorerWidgetActions.EditNameFilters,
-            text=_("Edit filter settings..."),
+            text=_("Edit filter settings…"),
             icon=self.create_icon('filter'),
             triggered=self.edit_filter,
         )
@@ -468,7 +466,7 @@ class ExplorerWidget(PluginMainWidget):
             _(
                 "Filter files by name, extension, or more using "
                 '<a href="https://en.wikipedia.org/wiki/Glob_(programming)">'
-                "glob patterns.</a> Please enter the glob patterns of the "
+                "glob patterns</a>. Enter the glob patterns of the "
                 "files you want to show, separated by commas."
             )
         )

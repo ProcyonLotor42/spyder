@@ -31,7 +31,7 @@ class ExplorerConfigPage(PluginConfigPage):
         basic_group = QGroupBox(_("General options"))
         check_show_hidden_files = newcb(_("Show hidden files"), 'show_hidden')
         check_single_click = newcb(
-            _("Single click to open files"), 'single_click_to_open')
+            _("Open files with single click"), 'single_click_to_open')
         basic_layout = QVBoxLayout()
         basic_layout.addWidget(check_show_hidden_files)
         basic_layout.addWidget(check_single_click)
@@ -42,7 +42,7 @@ class ExplorerConfigPage(PluginConfigPage):
         description_label = QLabel(
             _('Filter files by name, extension, or more using '
               '<a href="https://en.wikipedia.org/wiki/Glob_(programming)">glob '
-              'patterns.</a> Please enter the glob patterns of the files you '
+              'patterns</a>. Enter the glob patterns of the files you '
               'want to show, separated by commas.'))
         description_label.setOpenExternalLinks(True)
         description_label.setWordWrap(True)

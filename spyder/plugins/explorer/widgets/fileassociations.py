@@ -4,9 +4,7 @@
 # Licensed under the terms of the MIT License
 # (see spyder/__init__.py for details)
 
-"""
-File associations widget for use in global and project preferences.
-"""
+"""File associations widget for use in global and project preferences."""
 
 # Standard library imports
 import os
@@ -110,7 +108,7 @@ class ApplicationsDialog(QDialog):
         self.label_browse = QLabel()
         self.edit_filter = QLineEdit()
         self.list = QListWidget()
-        self.button_browse = QPushButton(_('Browse...'))
+        self.button_browse = QPushButton(_('Browse…'))
         self.button_box = SpyderDialogButtonBox(
             QDialogButtonBox.Ok | QDialogButtonBox.Cancel
         )
@@ -392,7 +390,7 @@ class FileAssociationsWidget(QWidget):
 
     def _add_application(self, app_name, fpath):
         """Add application helper."""
-        app_not_found_text = _(' (Application not found!)')
+        app_not_found_text = _(' (application not found)')
         for row in range(self.list_applications.count()):
             item = self.list_applications.item(row)
             # Ensure the actual name is checked without the `app not found`
@@ -411,7 +409,7 @@ class FileAssociationsWidget(QWidget):
             self.list_applications.setCurrentItem(item)
 
         if not (os.path.isfile(fpath) or os.path.isdir(fpath)):
-            item.setToolTip(_('Application not found!'))
+            item.setToolTip(_('Application not found'))
 
     def _update_extensions(self):
         """Update extensions list."""
@@ -430,8 +428,8 @@ class FileAssociationsWidget(QWidget):
             self,
             title=_('File association'),
             label=(
-                _('Enter new file extension. You can add several values '
-                  'separated by commas.<br>Examples include:')
+                _('Enter new file extension(s), separated by commas.'
+                + '<br>Examples include:')
                 + '<ul><li><code>*.txt</code></li>'
                 + '<li><code>*.json,*.csv</code></li>'
                 + '<li><code>*.json,README.md</code></li></ul>'

@@ -37,7 +37,7 @@ def open_file_in_external_explorer(filename):
 
 
 def show_in_external_file_explorer(fnames=None):
-    """Show files in external file explorer
+    """Show files in external file explorer.
 
     Args:
         fnames (list): Names of files to show.
@@ -49,25 +49,25 @@ def show_in_external_file_explorer(fnames=None):
 
 
 def fixpath(path):
-    """Normalize path fixing case, making absolute and removing symlinks"""
+    """Normalize path fixing case, making absolute and removing symlinks."""
     norm = osp.normcase if os.name == 'nt' else osp.normpath
     return norm(osp.abspath(osp.realpath(path)))
 
 
 def create_script(fname):
-    """Create a new Python script"""
+    """Create a new Python script."""
     text = os.linesep.join(["# -*- coding: utf-8 -*-", "", ""])
     try:
         encoding.write(str(text), fname, 'utf-8')
     except EnvironmentError as error:
-        QMessageBox.critical(_("Save Error"),
+        QMessageBox.critical(_("Save error"),
                              _("<b>Unable to save file '%s'</b>"
                                "<br><br>Error message:<br>%s"
                                ) % (osp.basename(fname), str(error)))
 
 
 def listdir(path, include=r'.', exclude=r'\.pyc$|^\.', folders_only=False):
-    """List files and directories"""
+    """List files and directories."""
     namelist = []
     dirlist = [str(osp.pardir)]
     for item in os.listdir(str(path)):
@@ -83,7 +83,7 @@ def listdir(path, include=r'.', exclude=r'\.pyc$|^\.', folders_only=False):
 
 
 def has_subdirectories(path, include, exclude):
-    """Return True if path has subdirectories"""
+    """Return True if path has subdirectories."""
     try:
         # > 1 because of '..'
         return len(listdir(path, include, exclude, folders_only=True)) > 1
@@ -92,12 +92,12 @@ def has_subdirectories(path, include, exclude):
 
 
 class IconProvider(QFileIconProvider):
-    """Project tree widget icon provider"""
+    """Project tree widget icon provider."""
 
     @Slot(int)
     @Slot(QFileInfo)
     def icon(self, icontype_or_qfileinfo):
-        """Reimplement Qt method"""
+        """Reimplement Qt method."""
         if isinstance(icontype_or_qfileinfo, QFileIconProvider.IconType):
             return super().icon(icontype_or_qfileinfo)
         else:

@@ -165,25 +165,25 @@ class RemoteExplorer(QWidget, SpyderWidgetMixin):
 
         self.new_package_action = self.create_action(
             RemoteExplorerActions.NewPackage,
-            text=_("Python package..."),
+            text=_("Python package…"),
             icon=self.create_icon('package_new'),
             triggered=self.new_package,
         )
         self.new_module_action = self.create_action(
             RemoteExplorerActions.NewModule,
-            text=_("Python file..."),
+            text=_("Python file…"),
             icon=self.create_icon('python'),
             triggered=self.new_module,
         )
         self.new_directory_action = self.create_action(
             RemoteExplorerActions.NewDirectory,
-            text=_("Folder..."),
+            text=_("Folder…"),
             icon=self.create_icon('folder_new'),
             triggered=self.new_directory,
         )
         self.new_file_action = self.create_action(
             RemoteExplorerActions.NewFile,
-            text=_("File..."),
+            text=_("File…"),
             icon=self.create_icon('TextFileIcon'),
             triggered=self.new_file,
         )
@@ -201,7 +201,7 @@ class RemoteExplorer(QWidget, SpyderWidgetMixin):
         )
         self.rename_action = self.create_action(
             RemoteExplorerActions.Rename,
-            _("Rename..."),
+            _("Rename…"),
             icon=self.create_icon("rename"),
             triggered=self.rename_items,
         )
@@ -212,13 +212,13 @@ class RemoteExplorer(QWidget, SpyderWidgetMixin):
         )
         self.delete_action = self.create_action(
             RemoteExplorerActions.Delete,
-            _("Delete..."),
+            _("Delete…"),
             icon=self.create_icon("editclear"),
             triggered=self.delete_items,
         )
         self.download_action = self.create_action(
             RemoteExplorerActions.Download,
-            _("Download..."),
+            _("Download…"),
             icon=self.create_icon("fileimport"),
             triggered=self.download_items,
         )
@@ -396,7 +396,7 @@ class RemoteExplorer(QWidget, SpyderWidgetMixin):
                     _(
                         "Opening remote files in the Editor is not yet "
                         "supported. This feature will be added in Spyder "
-                        "6.2.0"
+                        "6.2.0."
                     )
                 )
             elif data_type == "ACTION" and data_name == "FETCH_MORE":
@@ -436,7 +436,7 @@ class RemoteExplorer(QWidget, SpyderWidgetMixin):
     def _on_remote_new_package(self, future, package_name):
         error = self._handle_future_response_error(
             future,
-            _("New Python Package error"),
+            _("New Python package error"),
             _("An error occured while trying to create a new Python package"),
         )
 
@@ -453,7 +453,7 @@ class RemoteExplorer(QWidget, SpyderWidgetMixin):
     def _on_remote_new_module(self, future):
         self._handle_future_response_error(
             future,
-            _("New Python File error"),
+            _("New Python file error"),
             _("An error occured while trying to create a new Python file"),
         )
         self.refresh(force_current=True)
@@ -590,7 +590,7 @@ class RemoteExplorer(QWidget, SpyderWidgetMixin):
 
                 if isinstance(error, ClientResponseError):
                     message = _(
-                        "It seems you don't have permissions to read the "
+                        "It seems you do not have permissions to read the "
                         "directory <b>{}</b> in server <b>{}</b>."
                     ).format(remote_dir, self._get_server_name())
                 else:
@@ -797,7 +797,7 @@ class RemoteExplorer(QWidget, SpyderWidgetMixin):
             if not yes_to_all and response["exists"]:
                 if operation == RemoteExistenceOperations.Paste:
                     opening_sentence = _(
-                        "The file <b>{}</b> that you're trying to paste on "
+                        "The file <b>{}</b> that you are trying to paste on "
                         "the server <b>{}</b> already exists in the current "
                         "location."
                     )
@@ -805,7 +805,7 @@ class RemoteExplorer(QWidget, SpyderWidgetMixin):
                     files_counter = self._files_to_paste
                 elif operation == RemoteExistenceOperations.Upload:
                     opening_sentence = _(
-                        "The file <b>{}</b> that you're trying to upload to "
+                        "The file <b>{}</b> that you are trying to upload to "
                         "the server <b>{}</b> already exists in the current "
                         "location."
                     )
@@ -816,7 +816,7 @@ class RemoteExplorer(QWidget, SpyderWidgetMixin):
                     RemoteExistenceOperations.NewFileWithContent,
                 ]:
                     opening_sentence = _(
-                        "The file <b>{}</b> that you're trying to create on "
+                        "The file <b>{}</b> that you are trying to create on "
                         "the server <b>{}</b> already exists in the current "
                         "location."
                     )
@@ -1166,7 +1166,7 @@ class RemoteExplorer(QWidget, SpyderWidgetMixin):
             more_files_available = self.model.match(
                 self.model.index(0, 0),
                 Qt.DisplayRole,
-                _("Maximum number of files to display reached!"),
+                _("Maximum number of files to display reached"),
             )
             if len(more_files_available):
                 # Remove more items available item
@@ -1221,7 +1221,7 @@ class RemoteExplorer(QWidget, SpyderWidgetMixin):
                 )
             elif len(self.extra_files) == 0 and self.more_files_available:
                 more_items_available = QStandardItem(
-                    _("Maximum number of files to display reached!")
+                    _("Maximum number of files to display reached")
                 )
                 more_items_available.setEditable(False)
                 more_items_available.setData(
@@ -1319,28 +1319,28 @@ class RemoteExplorer(QWidget, SpyderWidgetMixin):
 
     def new_package(self):
         new_name, valid = QInputDialog.getText(
-            self, _("New Python Package"), _("Name as:"), QLineEdit.Normal, ""
+            self, _("New Python package"), _("Name as:"), QLineEdit.Normal, ""
         )
         if valid:
             self._new_item(new_name, with_content=True)
 
     def new_module(self):
         new_name, valid = QInputDialog.getText(
-            self, _("New Python File"), _("Name as:"), QLineEdit.Normal, ".py"
+            self, _("New Python file"), _("Name as:"), QLineEdit.Normal, ".py"
         )
         if valid:
             self._new_item(new_name, for_file=True, with_content=True)
 
     def new_directory(self):
         new_name, valid = QInputDialog.getText(
-            self, _("New Folder"), _("Name as:"), QLineEdit.Normal, ""
+            self, _("New folder"), _("Name as:"), QLineEdit.Normal, ""
         )
         if valid:
             self._new_item(new_name)
 
     def new_file(self):
         new_name, valid = QInputDialog.getText(
-            self, _("New File"), _("Name as:"), QLineEdit.Normal, ""
+            self, _("New file"), _("Name as:"), QLineEdit.Normal, ""
         )
         if valid:
             self._new_item(new_name, for_file=True)
@@ -1503,7 +1503,7 @@ class RemoteExplorer(QWidget, SpyderWidgetMixin):
                         _(
                             "Do you really want to delete <b>{filename}</b>?"
                             "<br><br>"
-                            "<b>Note</b>: The file/directory will be removed "
+                            "<b>Note:</b> the file/directory will be removed "
                             "permanently from the remote filesystem."
                         ).format(filename=filename),
                         buttons
